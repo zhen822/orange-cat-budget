@@ -26,13 +26,13 @@
       </div>
     </div>
     <nav class="sidebar__nav">
-      <a href="index.html"             class="nav-item"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
-      <a href="index.html#chat"        class="nav-item"><span class="nav-item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
-      <a href="calendar.html"          class="nav-item"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+      <a href="index.html"              class="nav-item"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="index.html#chat"         class="nav-item"><span class="nav-item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
+      <a href="calendar.html"           class="nav-item"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
       <a href="index.html#transactions" class="nav-item"><span class="nav-item__icon">📋</span> <span data-i18n="nav.transactions">Transactions</span></a>
-      <a href="budget.html"            class="nav-item active"><span class="nav-item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
-      <a href="reports.html"           class="nav-item"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
-      <a href="settings.html"          class="nav-item"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+      <a href="budget.html"             class="nav-item active"><span class="nav-item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+      <a href="reports.html"            class="nav-item"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+      <a href="settings.html"           class="nav-item"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
     </nav>
     <div class="sidebar__bottom">
       <button id="theme-toggle"><span id="theme-icon">🌙</span></button>
@@ -45,7 +45,11 @@
     <header class="topbar">
       <h1 class="topbar__title" data-i18n="budget.title">Budget Planning</h1>
       <div class="topbar__actions">
-        <span id="budget-cycle-label" class="cycle-label" style="margin:0;font-size:0.8rem"></span>
+        <span id="budget-cycle-label" class="cycle-label" style="margin:0;font-size:0.8rem;display:none"></span>
+        <!-- Mobile: FAB-style add button -->
+        <button class="btn btn--primary btn--sm" id="budget-add-btn">
+          + <span data-i18n="budget.setBudget">Set Budget</span>
+        </button>
       </div>
     </header>
 
@@ -58,40 +62,17 @@
       <div class="section">
         <div class="section__header">
           <h2 class="section__title" data-i18n="budget.cycleSummary">Cycle Summary</h2>
+          <span id="budget-cycle-label-desk" class="muted" style="font-size:0.78rem"></span>
         </div>
         <div class="card budget-summary-card" id="budget-summary-card">
           <p class="muted">Loading...</p>
         </div>
       </div>
 
-      <!-- ── Add budget form ────────────────────────────── -->
-      <div class="section">
-        <div class="section__header">
-          <h2 class="section__title" data-i18n="budget.addBudget">Set Category Budget</h2>
-        </div>
-        <div class="card">
-          <form id="budget-add-form" class="budget-add-form">
-            <div class="budget-form-row">
-              <label>
-                <span data-i18n="budget.categoryLabel">Category</span>
-                <select id="budget-cat-select" class="field"></select>
-              </label>
-              <label>
-                <span data-i18n="budget.amountLabel">Budget Amount</span>
-                <input type="number" id="budget-amount-input" data-i18n-placeholder="budget.amountPlaceholder" class="field" placeholder="e.g. 800" min="0.01" step="0.01">
-              </label>
-              <div class="budget-form-btn">
-                <button type="submit" class="btn btn--primary" data-i18n="budget.setBudget">Set Budget</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-
       <!-- ── Category budgets list ─────────────────────── -->
       <div class="section">
         <div class="section__header">
-          <h2 class="section__title" data-i18n="budget.title">Category Budgets</h2>
+          <h2 class="section__title" data-i18n="nav.budget">Budget</h2>
           <span id="budget-count" class="muted" style="font-size:0.8rem"></span>
         </div>
         <div id="budget-category-list"></div>
@@ -102,7 +83,6 @@
         <div class="section__header">
           <h2 class="section__title" data-i18n="budget.analytics">Budget Analytics</h2>
         </div>
-
         <div class="charts-grid">
           <div class="chart-card">
             <div class="chart-card__title" data-i18n="budget.chartVsActual">Budget vs Actual Spending</div>
@@ -113,8 +93,7 @@
             <canvas id="chart-budget-usage"></canvas>
           </div>
         </div>
-
-        <div class="chart-card" style="margin-bottom: var(--space-xl)">
+        <div class="chart-card" style="margin-bottom:var(--space-xl)">
           <div class="chart-card__title" data-i18n="budget.chartTrend">Cumulative Spending vs Ideal Pace</div>
           <canvas id="chart-spending-trend"></canvas>
         </div>
@@ -124,20 +103,64 @@
   </main>
 </div>
 
+<!-- ── Add / Edit Budget Sheet (works as modal on desktop, bottom sheet on mobile) ── -->
+<div class="modal" id="budget-sheet">
+  <div class="modal__box budget-sheet__box">
+    <div class="modal__header">
+      <h3 class="modal__title" id="budget-sheet-title" data-i18n="budget.addBudget">Set Category Budget</h3>
+      <button class="modal__close" id="budget-sheet-close">✕</button>
+    </div>
+
+    <form id="budget-add-form">
+      <!-- Category selector with icons -->
+      <div class="budget-sheet__field">
+        <label class="budget-sheet__label" data-i18n="budget.categoryLabel">Category</label>
+        <div class="budget-cat-grid" id="budget-cat-grid">
+          <!-- Populated by JS -->
+        </div>
+        <!-- Hidden select keeps the form value -->
+        <select id="budget-cat-select" style="display:none"></select>
+      </div>
+
+      <!-- Amount input -->
+      <div class="budget-sheet__field">
+        <label class="budget-sheet__label" for="budget-amount-input" data-i18n="budget.amountLabel">Budget Amount</label>
+        <div class="budget-amount-row">
+          <span class="budget-amount-sym" id="budget-currency-sym">RM</span>
+          <input type="number" id="budget-amount-input" class="budget-amount-input"
+            data-i18n-placeholder="budget.amountPlaceholder"
+            placeholder="0.00" min="0.01" step="0.01" inputmode="decimal">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn--primary budget-sheet__submit" data-i18n="budget.setBudget">
+        Set Budget
+      </button>
+    </form>
+  </div>
+</div>
+
 <!-- ── Edit budget modal ──────────────────────────────── -->
 <div class="modal" id="budget-edit-modal">
   <div class="modal__box">
     <div class="modal__header">
-      <h3 class="modal__title">Edit Budget — <span id="budget-edit-cat-label"></span></h3>
+      <h3 class="modal__title">
+        <span data-i18n="budget.editTitle">Edit Budget</span>
+        — <span id="budget-edit-cat-label"></span>
+      </h3>
       <button class="modal__close" id="budget-edit-cancel">✕</button>
     </div>
     <input type="hidden" id="budget-edit-id">
-    <label style="display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-lg)">
-      <span data-i18n="budget.editAmountLabel">Budget Amount</span>
-      <input type="number" id="budget-edit-amount" class="field" placeholder="0.00" min="0.01" step="0.01">
-    </label>
-    <div style="display:flex;gap:var(--space-sm);justify-content:flex-end">
-      <button class="btn btn--ghost" data-i18n="budget.editCancel" id="budget-edit-cancel-btn" onclick="document.getElementById('budget-edit-cancel').click()">Cancel</button>
+    <div class="budget-sheet__field">
+      <label class="budget-sheet__label" data-i18n="budget.editAmountLabel">Budget Amount</label>
+      <div class="budget-amount-row">
+        <span class="budget-amount-sym" id="budget-edit-currency-sym">RM</span>
+        <input type="number" id="budget-edit-amount" class="budget-amount-input"
+          placeholder="0.00" min="0.01" step="0.01" inputmode="decimal">
+      </div>
+    </div>
+    <div style="display:flex;gap:var(--space-sm);justify-content:flex-end;margin-top:var(--space-lg)">
+      <button class="btn btn--ghost" id="budget-edit-cancel-btn" data-i18n="budget.editCancel">Cancel</button>
       <button class="btn btn--primary" id="budget-edit-save" data-i18n="budget.editSave">Save Changes</button>
     </div>
   </div>
@@ -146,37 +169,58 @@
 <!-- Mobile nav -->
 <nav class="mobile-nav">
   <div class="mobile-nav__items">
-    <a href="index.html"     class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
+    <a href="index.html"      class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
     <a href="index.html#chat" class="mobile-nav__item"><span class="mobile-nav__item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
-    <a href="budget.html"    class="mobile-nav__item active"><span class="mobile-nav__item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
-    <a href="reports.html"   class="mobile-nav__item"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
-    <a href="settings.html"  class="mobile-nav__item"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+    <a href="budget.html"     class="mobile-nav__item active"><span class="mobile-nav__item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+    <a href="reports.html"    class="mobile-nav__item"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+    <a href="settings.html"   class="mobile-nav__item"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
   </div>
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script type="module">
-import { initApp, getCurrentCycle, applyToDOM } from './js/app.js';
-import { initBudgetPage }           from './js/budget.js';
+import { initApp, getCurrentCycle, applyToDOM, AppState } from './js/app.js';
+import { initBudgetPage } from './js/budget.js';
 
 await initApp();
 
 const cycle = getCurrentCycle();
-const cycleEl = document.getElementById('budget-cycle-label');
-if (cycleEl) cycleEl.textContent = `📆 ${cycle.label}`;
+const deskLabel = document.getElementById('budget-cycle-label-desk');
+if (deskLabel) deskLabel.textContent = `📆 ${cycle.label}`;
+
+// Sync currency symbol into amount fields
+document.querySelectorAll('.budget-amount-sym').forEach(el => {
+  el.textContent = AppState.currencySymbol;
+});
 
 await initBudgetPage();
+
+// Open sheet
+document.getElementById('budget-add-btn')?.addEventListener('click', () => {
+  document.getElementById('budget-sheet')?.classList.add('modal--open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('budget-amount-input')?.focus(), 300);
+});
+
+// Close sheet
+document.getElementById('budget-sheet-close')?.addEventListener('click', () => {
+  document.getElementById('budget-sheet')?.classList.remove('modal--open');
+  document.body.style.overflow = '';
+});
 
 document.addEventListener('langchange', async () => {
   applyToDOM();
   await initBudgetPage();
 });
 
-const countEl = document.getElementById('budget-count');
-if (countEl) {
+// Update count label
+function updateCount() {
+  const countEl = document.getElementById('budget-count');
   const cards = document.querySelectorAll('.bcat-card');
-  countEl.textContent = `${cards.length} categor${cards.length === 1 ? 'y' : 'ies'}`;
+  if (countEl) countEl.textContent = cards.length > 0 ? `(${cards.length})` : '';
 }
+updateCount();
+document.addEventListener('budgetUpdated', updateCount);
 </script>
 </body>
 </html>
