@@ -103,9 +103,9 @@
   </main>
 </div>
 
-<!-- ── Add / Edit Budget Sheet (works as modal on desktop, bottom sheet on mobile) ── -->
-<div class="modal" id="budget-sheet">
-  <div class="modal__box budget-sheet__box">
+<!-- ── Add / Edit Budget Sheet ── -->
+<div class="budget-sheet-overlay" id="budget-sheet">
+  <div class="budget-sheet__box">
     <div class="modal__header">
       <h3 class="modal__title" id="budget-sheet-title" data-i18n="budget.addBudget">Set Category Budget</h3>
       <button class="modal__close" id="budget-sheet-close">✕</button>
@@ -197,15 +197,23 @@ await initBudgetPage();
 
 // Open sheet
 document.getElementById('budget-add-btn')?.addEventListener('click', () => {
-  document.getElementById('budget-sheet')?.classList.add('modal--open');
+  document.getElementById('budget-sheet')?.classList.add('budget-sheet--open');
   document.body.style.overflow = 'hidden';
   setTimeout(() => document.getElementById('budget-amount-input')?.focus(), 300);
 });
 
-// Close sheet
+// Close sheet via X button
 document.getElementById('budget-sheet-close')?.addEventListener('click', () => {
-  document.getElementById('budget-sheet')?.classList.remove('modal--open');
+  document.getElementById('budget-sheet')?.classList.remove('budget-sheet--open');
   document.body.style.overflow = '';
+});
+
+// Close sheet by tapping the dark backdrop (but NOT the box itself)
+document.getElementById('budget-sheet')?.addEventListener('click', (e) => {
+  if (e.target === document.getElementById('budget-sheet')) {
+    document.getElementById('budget-sheet').classList.remove('budget-sheet--open');
+    document.body.style.overflow = '';
+  }
 });
 
 document.addEventListener('langchange', async () => {
