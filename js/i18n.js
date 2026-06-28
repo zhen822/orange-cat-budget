@@ -144,6 +144,10 @@ export function applyToDOM(root = document) {
   root.querySelectorAll('[data-i18n-content]').forEach((el) => {
     el.setAttribute('content', t(el.dataset.i18nContent));
   });
+  // Update data-quick values on chat quick-entry buttons
+  root.querySelectorAll('[data-i18n-quick]').forEach((el) => {
+    el.dataset.quick = t(el.dataset.i18nQuick);
+  });
 
   // Sync <html lang=""> attribute
   document.documentElement.lang = _lang;
