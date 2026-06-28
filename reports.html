@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>橘猫记账 OrangeCat Budget — Reports</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/reports.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <picture class="sidebar__logo-picture"><source srcset="assets/icons/logo-icon-dark.svg" media="(prefers-color-scheme: dark)"><img src="assets/icons/logo-icon.svg" alt="橘猫记账" class="sidebar__logo-img" width="40" height="40"></picture>
+      <div class="sidebar__logo-text-wrap">
+        <span class="sidebar__logo-text">OrangeCat</span>
+        <span class="sidebar__logo-sub">橘猫记账</span>
+      </div>
+    </div>
+    <nav class="sidebar__nav">
+      <a href="index.html" class="nav-item"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="index.html#chat" class="nav-item"><span class="nav-item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
+      <a href="calendar.html" class="nav-item"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+      <a href="index.html#transactions" class="nav-item"><span class="nav-item__icon">📋</span> <span data-i18n="nav.transactions">Transactions</span></a>
+      <a href="reports.html" class="nav-item active"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+      <a href="settings.html" class="nav-item"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+    </nav>
+    <div class="sidebar__bottom">
+      <button id="theme-toggle"><span id="theme-icon">🌙</span></button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <h1 class="topbar__title" data-i18n="reports.title">Reports & Analytics</h1>
+      <div class="topbar__actions">
+        <div class="period-switcher">
+          <button class="btn active" data-period="daily" data-i18n="reports.daily">Daily</button>
+          <button class="btn" data-period="weekly" data-i18n="reports.weekly">Weekly</button>
+          <button class="btn" data-period="monthly" data-i18n="reports.monthly">Monthly</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="page-content">
+
+      <!-- Summary cards -->
+      <div class="reports-summary">
+        <div class="card card--income">
+          <div class="card__label" data-i18n="reports.income">Income (Cycle)</div>
+          <div class="card__amount" id="r-income">RM 0.00</div>
+        </div>
+        <div class="card card--expense">
+          <div class="card__label" data-i18n="reports.expenses">Expenses (Cycle)</div>
+          <div class="card__amount" id="r-expenses">RM 0.00</div>
+        </div>
+        <div class="card card--savings">
+          <div class="card__label" data-i18n="reports.savings">Savings (Cycle)</div>
+          <div class="card__amount" id="r-savings">RM 0.00</div>
+        </div>
+        <div class="card">
+          <div class="card__label" data-i18n="reports.balance">Balance</div>
+          <div class="card__amount" id="r-balance">RM 0.00</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-card__title" data-i18n="reports.spendingTrend">Spending Trend</div>
+          <canvas id="chart-spending"></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-card__title" data-i18n="reports.byCategory">Spending by Category</div>
+          <canvas id="chart-category"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:var(--space-xl)">
+        <div class="chart-card__title" data-i18n="reports.incomeVsExpense">Income vs Expenses (Last 6 Months)</div>
+        <canvas id="chart-income-expense"></canvas>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<nav class="mobile-nav">
+  <div class="mobile-nav__items">
+    <a href="index.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
+    <a href="index.html#chat" class="mobile-nav__item"><span class="mobile-nav__item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
+    <a href="calendar.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+    <a href="reports.html" class="mobile-nav__item active"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+    <a href="settings.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+  </div>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script type="module">
+import { initApp, t, applyToDOM } from './js/app.js';
+import { renderReports, setupPeriodSwitcher } from './js/charts.js';
+
+await initApp();
+document.addEventListener('langchange', async () => { applyToDOM(); await renderReports(); });
+await renderReports('daily');
+setupPeriodSwitcher();
+</script>
+</body>
+</html>

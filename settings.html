@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>橘猫记账 OrangeCat Budget — Settings</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/reports.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <picture class="sidebar__logo-picture"><source srcset="assets/icons/logo-icon-dark.svg" media="(prefers-color-scheme: dark)"><img src="assets/icons/logo-icon.svg" alt="橘猫记账" class="sidebar__logo-img" width="40" height="40"></picture>
+      <div class="sidebar__logo-text-wrap">
+        <span class="sidebar__logo-text">OrangeCat</span>
+        <span class="sidebar__logo-sub">橘猫记账</span>
+      </div>
+    </div>
+    <nav class="sidebar__nav">
+      <a href="index.html" class="nav-item"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="index.html#chat" class="nav-item"><span class="nav-item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
+      <a href="calendar.html" class="nav-item"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+      <a href="index.html#transactions" class="nav-item"><span class="nav-item__icon">📋</span> <span data-i18n="nav.transactions">Transactions</span></a>
+      <a href="budget.html" class="nav-item" data-nav="budget"><span class="nav-item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+      <a href="reports.html" class="nav-item"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+      <a href="settings.html" class="nav-item active"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+    </nav>
+    <div class="sidebar__bottom">
+      <button id="theme-toggle"><span id="theme-icon">🌙</span></button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <h1 class="topbar__title" data-i18n="settings.title">Settings</h1>
+    </header>
+
+    <div class="page-content" style="max-width:800px">
+
+      <!-- Preferences -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" data-i18n="settings.preferences">⚙️ Preferences</h3>
+
+        <div class="grid-2" style="gap:var(--space-lg)">
+          <div>
+            <label style="margin-bottom:var(--space-md)"><span data-i18n="settings.cycleStartLabel">Accounting Cycle Start Day</span>
+              <input type="number" id="cycle-start-day" class="field" min="1" max="28" value="1">
+              <small class="muted"><span data-i18n="settings.cycleStartHint">Cycle runs from this day each month (1–28)</span></small>
+            </label>
+          </div>
+          <div>
+            <label><span data-i18n="settings.currencyLabel">Default Currency</span>
+              <select id="currency-select" class="field">
+                <option value="MYR">MYR — Malaysian Ringgit (RM)</option>
+                <option value="USD">USD — US Dollar ($)</option>
+                <option value="EUR">EUR — Euro (€)</option>
+                <option value="SGD">SGD — Singapore Dollar (S$)</option>
+                <option value="GBP">GBP — British Pound (£)</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-top:var(--space-lg)">
+          <p style="font-size:0.875rem;font-weight:500;color:var(--color-text-secondary);margin-bottom:var(--space-sm)">Theme</p>
+          <div style="display:flex;gap:var(--space-md)">
+            <label style="flex-direction:row;align-items:center;gap:var(--space-sm);font-size:0.9rem;cursor:pointer">
+              <input type="radio" name="theme" value="light"> <span data-i18n="settings.themeLight">☀️ Light</span>
+            </label>
+            <label style="flex-direction:row;align-items:center;gap:var(--space-sm);font-size:0.9rem;cursor:pointer">
+              <input type="radio" name="theme" value="dark"> <span data-i18n="settings.themeDark">🌙 Dark</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-top:var(--space-lg)">
+          <p style="font-size:0.875rem;font-weight:500;color:var(--color-text-secondary);margin-bottom:var(--space-sm)" data-i18n="settings.languageLabel">Language</p>
+          <select id="lang-select" class="field" style="max-width:220px">
+            <option value="en">🇺🇸 English</option>
+            <option value="zh-CN">🇨🇳 简体中文</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Recurring Transactions -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" data-i18n="settings.recurring">🔄 Recurring Transactions</h3>
+
+        <form id="recurring-form" style="margin-bottom:var(--space-lg)">
+          <div class="grid-2" style="gap:var(--space-md);margin-bottom:var(--space-md)">
+            <label>Name <input type="text" id="rec-name" class="field" placeholder="e.g. Monthly Rent"></label>
+            <label>Amount <input type="number" id="rec-amount" class="field" placeholder="0.00" step="0.01" min="0"></label>
+            <label>Type
+              <select id="rec-type" class="field">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+                <option value="savings">Savings</option>
+              </select>
+            </label>
+            <label>Category <select id="rec-category" class="field"></select></label>
+            <label>Frequency
+              <select id="rec-frequency" class="field">
+                <option value="monthly">Monthly</option>
+                <option value="weekly">Weekly</option>
+              </select>
+            </label>
+            <label>Day of Month
+              <input type="number" id="rec-day-of-month" class="field" min="1" max="28" value="1">
+            </label>
+            <label>Icon (emoji)
+              <input type="text" id="rec-icon" class="field" placeholder="🔄" maxlength="4">
+            </label>
+          </div>
+          <div style="display:flex;gap:var(--space-sm)">
+            <button type="button" class="btn btn--ghost" id="rec-cancel">Cancel</button>
+            <button type="submit" class="btn btn--primary">Add Recurring</button>
+          </div>
+        </form>
+
+        <div id="recurring-list"></div>
+      </div>
+
+      <!-- Custom Categories -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" data-i18n="settings.categories">🏷️ Custom Categories</h3>
+
+        <form id="cat-form" style="margin-bottom:var(--space-lg)">
+          <div class="grid-2" style="gap:var(--space-md);margin-bottom:var(--space-md)">
+            <label>Name <input type="text" id="cat-name" class="field" placeholder="Category name"></label>
+            <label>Type
+              <select id="cat-type" class="field">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+                <option value="savings">Savings</option>
+              </select>
+            </label>
+            <label>Icon (emoji) <input type="text" id="cat-icon" class="field" placeholder="📦" maxlength="4"></label>
+            <label>Color <input type="color" id="cat-color" class="field" value="#5B6AF0" style="height:42px;padding:4px"></label>
+          </div>
+          <button type="submit" class="btn btn--primary">Add Category</button>
+        </form>
+
+        <div id="categories-list"></div>
+      </div>
+
+      <!-- Savings Goals -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" data-i18n="settings.savingsGoals">🎯 Savings Goals</h3>
+
+        <form id="goal-form" style="margin-bottom:var(--space-lg)">
+          <div class="grid-2" style="gap:var(--space-md);margin-bottom:var(--space-md)">
+            <label>Goal Name <input type="text" id="goal-name" class="field" placeholder="e.g. Japan Trip"></label>
+            <label>Target Amount <input type="number" id="goal-target" class="field" placeholder="5000" min="0" step="0.01"></label>
+          </div>
+          <button type="submit" class="btn btn--primary">Add Goal</button>
+        </form>
+
+        <div id="goals-list"></div>
+      </div>
+
+      <!-- Data Management -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" data-i18n="settings.dataManagement">💾 Data Management</h3>
+        <p class="muted" style="margin-bottom:var(--space-md)">Export your data for backup or analysis. All data stays on your device.</p>
+        <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap">
+          <button class="btn btn--ghost" id="export-btn" data-i18n="settings.exportJson">📥 Export JSON Backup</button>
+          <button class="btn btn--ghost" id="export-csv-btn" data-i18n="settings.exportCsv">📊 Export CSV</button>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="settings-section">
+        <h3 class="settings-section__title" data-i18n="settings.about">ℹ️ About</h3>
+        <p class="muted">橘猫记账 OrangeCat Budget v1.0.0 — Personal finance tracker. All data is stored locally in your browser using IndexedDB. No account required.</p>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<nav class="mobile-nav">
+  <div class="mobile-nav__items">
+    <a href="index.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
+    <a href="index.html#chat" class="mobile-nav__item"><span class="mobile-nav__item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
+    <a href="calendar.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+    <a href="budget.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+    <a href="reports.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+    <a href="settings.html" class="mobile-nav__item active"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+  </div>
+</nav>
+
+<script type="module">
+import { initApp } from './js/app.js';
+import { initSettings } from './js/settings.js';
+import { initRecurring } from './js/recurring.js';
+
+await initApp();
+await initSettings();
+await initRecurring();
+</script>
+</body>
+</html>
