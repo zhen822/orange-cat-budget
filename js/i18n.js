@@ -40,8 +40,8 @@ export async function loadLocale(lang) {
 
 export async function initI18n() {
   const saved = await getSetting('lang');
-  const lang  = saved || navigator.language.startsWith('zh') ? 'zh-CN' : 'en';
-  await loadLocale(lang || 'en');
+  const lang  = saved || (navigator.language.startsWith('zh') ? 'zh-CN' : 'en');
+  await loadLocale(lang);
   applyToDOM();
 }
 
