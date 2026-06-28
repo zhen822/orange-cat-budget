@@ -1,158 +1,65 @@
-/* calendar.css — Calendar page styles */
+/* calendar.css */
 
-/* ── Calendar header controls ─────────────────────────────── */
-.cal-controls {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  margin-bottom: var(--space-lg);
+.cal-controls{display:flex;align-items:center;gap:var(--space-md);margin-bottom:var(--space-lg)}
+#cal-month-label{font-size:1.05rem;font-weight:800;flex:1;text-align:center;background:var(--grad-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.cal-grid-wrapper{background:var(--color-surface);border:1.5px solid var(--color-border-subtle);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+
+#calendar-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+
+.cal-header-cell{
+  padding:10px 0;text-align:center;font-size:.7rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-muted);
+  background:var(--color-surface-alt);border-bottom:1px solid var(--color-border-subtle)
 }
 
-#cal-month-label {
-  font-size: 1.1rem;
-  font-weight: 700;
-  flex: 1;
-  text-align: center;
+.cal-cell{
+  min-height:80px;padding:var(--space-xs);
+  border-right:1px solid var(--color-border-subtle);
+  border-bottom:1px solid var(--color-border-subtle);
+  cursor:pointer;transition:background var(--transition);
+  display:flex;flex-direction:column;gap:2px
 }
+.cal-cell:hover:not(.cal-cell--empty){background:var(--o50)}
+[data-theme="dark"] .cal-cell:hover:not(.cal-cell--empty){background:rgba(249,115,22,.06)}
+.cal-cell--empty{cursor:default;background:var(--color-bg);opacity:.4}
+.cal-cell--has-data{background:var(--o50)}
+[data-theme="dark"] .cal-cell--has-data{background:rgba(249,115,22,.08)}
 
-/* ── Calendar grid ────────────────────────────────────────── */
-.cal-grid-wrapper {
-  background: var(--color-surface);
-  border: 1.5px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
+.cal-cell--today .cal-cell__day{
+  background:var(--grad-primary);color:#fff;border-radius:var(--radius-full);
+  width:24px;height:24px;display:flex;align-items:center;justify-content:center
 }
+.cal-cell__day{font-size:.78rem;font-weight:600;color:var(--color-text);line-height:24px;padding:0 2px}
+.cal-cell__income{font-size:.62rem;font-weight:700;color:var(--color-income);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-cell__expense{font-size:.62rem;font-weight:700;color:var(--color-expense);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-#calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+/* Day detail panel */
+.day-detail{
+  position:fixed;right:-440px;top:0;width:400px;height:100dvh;
+  background:var(--color-surface);border-left:1.5px solid var(--color-border-subtle);
+  box-shadow:var(--shadow-lg);z-index:150;display:flex;flex-direction:column;
+  transition:right var(--transition-slow);overflow:hidden
 }
-
-.cal-header-cell {
-  padding: 10px 0;
-  text-align: center;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--color-text-muted);
-  background: var(--color-surface-alt);
-  border-bottom: 1.5px solid var(--color-border);
+.day-detail--open{right:0}
+.day-detail__header{
+  padding:var(--space-lg);border-bottom:1px solid var(--color-border-subtle);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+  background:var(--grad-card)
 }
+.day-detail__date{font-size:1.05rem;font-weight:800}
+#day-detail-body{padding:var(--space-lg);overflow-y:auto;flex:1}
 
-.cal-cell {
-  min-height: 88px;
-  padding: var(--space-xs);
-  border-right: 1px solid var(--color-border-subtle);
-  border-bottom: 1px solid var(--color-border-subtle);
-  cursor: pointer;
-  transition: background var(--transition);
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+.day-summary{
+  display:flex;gap:var(--space-md);margin-bottom:var(--space-md);
+  padding:var(--space-md);background:var(--color-surface-alt);
+  border-radius:var(--radius-md);font-size:.875rem;font-weight:600
 }
+.day-summary__income{color:var(--color-income)}
+.day-summary__expense{color:var(--color-expense)}
 
-.cal-cell:hover:not(.cal-cell--empty) { background: var(--color-surface-alt); }
-.cal-cell--empty { cursor: default; background: var(--color-bg); opacity: 0.5; }
-
-.cal-cell--today .cal-cell__day {
-  background: var(--color-primary);
-  color: #fff;
-  border-radius: var(--radius-full);
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cal-cell--has-data { background: var(--color-primary-light); }
-.cal-cell--has-data:hover { background: var(--color-primary-light); filter: brightness(0.97); }
-
-.cal-cell__day {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-text);
-  line-height: 24px;
-  padding: 0 2px;
-}
-
-.cal-cell__income {
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: var(--color-income);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.cal-cell__expense {
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: var(--color-expense);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ── Day detail panel ─────────────────────────────────────── */
-.day-detail {
-  position: fixed;
-  right: -440px;
-  top: 0;
-  width: 400px;
-  height: 100dvh;
-  background: var(--color-surface);
-  border-left: 1.5px solid var(--color-border);
-  box-shadow: var(--shadow-lg);
-  z-index: 150;
-  display: flex;
-  flex-direction: column;
-  transition: right var(--transition-slow);
-  overflow: hidden;
-}
-
-.day-detail--open { right: 0; }
-
-.day-detail__header {
-  padding: var(--space-lg);
-  border-bottom: 1.5px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-}
-
-.day-detail__date { font-size: 1.1rem; font-weight: 700; }
-
-#day-detail-body { padding: var(--space-lg); overflow-y: auto; flex: 1; }
-
-/* ── Day summary ──────────────────────────────────────────── */
-.day-summary {
-  display: flex;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-  padding: var(--space-md);
-  background: var(--color-surface-alt);
-  border-radius: var(--radius-md);
-  font-size: 0.875rem;
-}
-
-.day-summary__income { color: var(--color-income); }
-.day-summary__expense { color: var(--color-expense); }
-
-/* ── Meal gallery ─────────────────────────────────────────── */
-.meal-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: var(--space-sm); margin-top: var(--space-sm); }
-
-.meal-thumb { position: relative; border-radius: var(--radius-md); overflow: hidden; border: 1.5px solid var(--color-border); }
-.meal-thumb__img { width: 100%; aspect-ratio: 1; object-fit: cover; }
-.meal-thumb__placeholder { width: 100%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: var(--color-surface-alt); font-size: 2rem; }
-.meal-thumb__desc { font-size: 0.7rem; padding: 4px 6px; text-align: center; background: var(--color-surface); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-/* ── Responsive ───────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .cal-cell { min-height: 56px; }
-  .cal-cell__income, .cal-cell__expense { display: none; }
-  .day-detail { width: 100%; right: -100%; }
+@media(max-width:768px){
+  .cal-cell{min-height:52px}
+  .cal-cell__income,.cal-cell__expense{display:none}
+  .day-detail{width:100%;right:-100%}
 }

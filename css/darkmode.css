@@ -1,58 +1,25 @@
-/* darkmode.css — Dark mode supplemental overrides
-   Primary dark mode is handled via CSS custom properties in style.css.
-   This file handles any component-specific dark mode adjustments. */
+/* darkmode.css — Dark mode supplemental overrides */
 
-[data-theme="dark"] {
-  /* Chart.js overrides via CSS vars referenced in charts.js */
-  color-scheme: dark;
-}
+[data-theme="dark"] { color-scheme: dark }
 
-/* Logo dark-mode: swap image src via CSS content trick — handled via JS in app.js */
-[data-theme="dark"] .sidebar__logo-img {
-  box-shadow: 0 0 0 2px rgba(251,191,36,0.2);
-  content: url("../assets/icons/logo-icon-dark.svg");
-}
+/* Logo */
+[data-theme="dark"] .sidebar__logo-img { content:url("../assets/icons/logo-icon-dark.svg");box-shadow:0 0 0 2px rgba(251,191,36,.2) }
 
-[data-theme="dark"] .sidebar__logo-text {
-  color: #FBBF24;
-}
+/* Calendar */
+[data-theme="dark"] .cal-cell--has-data { background:rgba(249,115,22,.1) }
+[data-theme="dark"] .cal-cell--has-data:hover { background:rgba(249,115,22,.16) }
+[data-theme="dark"] .cal-cell--today .cal-cell__day { background:var(--grad-primary) }
 
-[data-theme="dark"] .sidebar__logo-sub {
-  color: #6B7280;
-}
+/* Chat bubble user */
+[data-theme="dark"] .chat-bubble--user .chat-bubble__body { background:var(--grad-primary);border-color:transparent }
 
-[data-theme="dark"] .cal-cell--has-data {
-  background: rgba(91, 106, 240, 0.15);
-}
+/* Inputs */
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator { filter:invert(.8) sepia(.5) saturate(2) hue-rotate(10deg) }
+[data-theme="dark"] select option { background:var(--color-surface) }
 
-[data-theme="dark"] .cal-cell--has-data:hover {
-  background: rgba(91, 106, 240, 0.2);
-}
+/* Period switcher */
+[data-theme="dark"] .period-switcher .btn.active { background:rgba(249,115,22,.2);color:var(--color-primary);box-shadow:none }
 
-[data-theme="dark"] .chat-bubble--user .chat-bubble__body {
-  background: var(--color-primary);
-}
-
-[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-}
-
-[data-theme="dark"] select option {
-  background: var(--color-surface);
-}
-
-[data-theme="dark"] .period-switcher .btn.active {
-  background: var(--color-surface-alt);
-  box-shadow: none;
-}
-
-[data-theme="dark"] .badge--urgent { background: rgba(220,38,38,0.2); }
-[data-theme="dark"] .badge--soon   { background: rgba(217,119,6,0.2); }
-
-[data-theme="dark"] scrollbar-color {
-  scrollbar-color: var(--color-border) transparent;
-}
-
-[data-theme="dark"] ::-webkit-scrollbar { width: 6px; height: 6px; }
-[data-theme="dark"] ::-webkit-scrollbar-track { background: transparent; }
-[data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }
+/* Badges */
+[data-theme="dark"] .badge--urgent { background:rgba(220,38,38,.2) }
+[data-theme="dark"] .badge--soon   { background:rgba(217,119,6,.2) }
