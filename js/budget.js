@@ -301,7 +301,7 @@ function setupBudgetFormListeners() {
     await setCategoryBudget(catName, amount);
     if (amtInput) amtInput.value = '';
     // Close the add sheet
-    document.getElementById('budget-sheet')?.classList.remove('modal--open');
+    document.getElementById('budget-sheet')?.classList.remove('budget-sheet--open');
     document.body.style.overflow = '';
     await refresh();
     showToast(t('toast.budgetSet', { cat: tc(catName) }));
