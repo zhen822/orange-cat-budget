@@ -8,81 +8,91 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/calendar.css">
   <link rel="stylesheet" href="css/darkmode.css">
+  <style>
+    /* Meal list styles */
+    .meal-group { margin-bottom: var(--space-lg); }
+    .meal-group__date { font-size: .825rem; font-weight: 700; color: var(--color-text-secondary); margin-bottom: var(--space-sm); }
+    .meal-list { display: flex; flex-direction: column; gap: var(--space-xs); }
+    .meal-row { display: flex; align-items: center; gap: var(--space-sm); background: var(--color-surface-alt); border-radius: var(--radius-sm); padding: 8px var(--space-md); }
+    .meal-row__icon { font-size: 1.1rem; }
+    .meal-row__desc { flex: 1; font-size: .875rem; font-weight: 500; }
+    .meal-add-form { display: grid; grid-template-columns: 1fr 1fr auto; gap: var(--space-sm); align-items: end; }
+    @media(max-width:600px) { .meal-add-form { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
 <div class="app-shell">
 
-  <!-- ── Sidebar ──────────────────────────────────────────── -->
   <aside class="sidebar">
     <div class="sidebar__logo">
-      <picture class="sidebar__logo-picture"><source srcset="assets/icons/logo-icon-dark.svg" media="(prefers-color-scheme: dark)"><img src="assets/icons/logo-icon.svg" alt="橘猫记账" class="sidebar__logo-img" width="40" height="40"></picture>
+      <picture class="sidebar__logo-picture">
+        <source srcset="assets/icons/logo-icon-dark.svg" media="(prefers-color-scheme: dark)">
+        <img src="assets/icons/logo-icon.svg" alt="橘猫记账" class="sidebar__logo-img" width="38" height="38">
+      </picture>
       <div class="sidebar__logo-text-wrap">
         <span class="sidebar__logo-text">OrangeCat</span>
         <span class="sidebar__logo-sub">橘猫记账</span>
       </div>
     </div>
     <nav class="sidebar__nav">
-      <a href="index.html" class="nav-item" data-nav="dashboard"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
-      <a href="index.html#chat" class="nav-item" data-nav="chat"><span class="nav-item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
-      <a href="calendar.html" class="nav-item active" data-nav="calendar"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
-      <a href="index.html#transactions" class="nav-item" data-nav="transactions"><span class="nav-item__icon">📋</span> <span data-i18n="nav.transactions">Transactions</span></a>
-      <a href="budget.html" class="nav-item" data-nav="budget"><span class="nav-item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
-      <a href="reports.html" class="nav-item" data-nav="reports"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
-      <a href="settings.html" class="nav-item" data-nav="settings"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+      <a href="index.html"              class="nav-item"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="index.html#chat"         class="nav-item"><span class="nav-item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
+      <a href="calendar.html"           class="nav-item active"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+      <a href="index.html#transactions" class="nav-item"><span class="nav-item__icon">📋</span> <span data-i18n="nav.transactions">Transactions</span></a>
+      <a href="budget.html"             class="nav-item"><span class="nav-item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+      <a href="reports.html"            class="nav-item"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+      <a href="settings.html"           class="nav-item"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
     </nav>
     <div class="sidebar__bottom">
+      <div id="user-badge"></div>
       <button id="theme-toggle"><span id="theme-icon">🌙</span></button>
     </div>
   </aside>
 
-  <!-- ── Main ─────────────────────────────────────────────── -->
   <main class="main-content">
     <header class="topbar">
       <h1 class="topbar__title" data-i18n="calendar.title">Calendar</h1>
-      <div class="topbar__actions">
-        <button id="theme-toggle" class="icon-btn">🌙</button>
-      </div>
     </header>
 
     <div class="page-content">
 
-      <!-- Meals section -->
+      <!-- ── Meal Tracker (text only) ───────────────────────── -->
       <div class="section">
         <div class="section__header">
-          <h2 class="section__title">🍱 Meal Tracker</h2>
-          <button class="btn btn--ghost btn--sm" id="meal-section-toggle"><span data-i18n="meals.toggle">Show / Hide</span></button>
+          <h2 class="section__title" data-i18n="meals.sectionTitle">🍱 Meal Tracker</h2>
         </div>
-        <div class="card" id="meal-section">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-md);margin-bottom:var(--space-md)">
-            <label><span data-i18n="meals.labelDate">Date</span> <input type="date" id="meal-date" class="field"></label>
-            <label><span data-i18n="meals.labelDesc">Description</span> <input type="text" id="meal-desc" class="field" placeholder="" data-i18n-placeholder="meals.descPlaceholder"></label>
-          </div>
-          <div id="meal-preview-wrap" style="margin-bottom:var(--space-md)">
-            <img id="meal-preview" src="" alt="Meal preview" style="display:none;max-height:180px;border-radius:var(--radius-md);object-fit:cover">
-          </div>
-          <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;margin-bottom:var(--space-md)">
-            <button class="btn btn--ghost btn--sm" id="meal-camera-btn" data-i18n="meals.camera">📷 Camera</button>
-            <button class="btn btn--ghost btn--sm" id="meal-upload-btn" data-i18n="meals.upload">📁 Upload Photo</button>
-            <input type="file" id="meal-file-input" accept="image/*" style="display:none">
-            <button class="btn btn--primary btn--sm" id="meal-save-btn" data-i18n="meals.saveMeal">Save Meal</button>
+        <div class="card">
+          <div class="meal-add-form" style="margin-bottom:var(--space-lg)">
+            <label>
+              <span data-i18n="meals.labelDate">Date</span>
+              <input type="date" id="meal-date" class="field">
+            </label>
+            <label>
+              <span data-i18n="meals.labelDesc">Description</span>
+              <input type="text" id="meal-desc" class="field"
+                data-i18n-placeholder="meals.descPlaceholder" placeholder="What did you eat?">
+            </label>
+            <div style="padding-bottom:2px">
+              <button class="btn btn--primary" id="meal-save-btn" style="width:100%" data-i18n="meals.saveMeal">Save Meal</button>
+            </div>
           </div>
           <div id="meals-gallery"></div>
         </div>
       </div>
 
-      <!-- Calendar -->
+      <!-- ── Calendar ───────────────────────────────────────── -->
       <div class="section">
         <div class="cal-controls">
           <button class="btn btn--ghost btn--sm" id="cal-prev" data-i18n="calendar.prev">← Prev</button>
-          <span id="cal-month-label" style="flex:1;text-align:center;font-weight:700">Loading...</span>
+          <span id="cal-month-label">Loading...</span>
           <button class="btn btn--ghost btn--sm" id="cal-today" data-i18n="calendar.today">Today</button>
           <button class="btn btn--ghost btn--sm" id="cal-next" data-i18n="calendar.next">Next →</button>
         </div>
         <div class="cal-grid-wrapper">
           <div id="calendar-grid"></div>
         </div>
-        <p class="muted" style="margin-top:var(--space-sm);font-size:0.75rem">
-          💚 Green = income &nbsp; 🔴 Red = expense &nbsp; Click any date to see details
+        <p class="muted" style="margin-top:var(--space-sm);font-size:.72rem" data-i18n="calendar.legend">
+          💚 Green = income   🔴 Red = expense   Click any date to see details
         </p>
       </div>
 
@@ -100,43 +110,33 @@
 
 </div>
 
-<!-- Camera modal -->
-<div class="modal" id="camera-modal">
-  <div class="modal__box">
-    <div class="modal__header">
-      <h3 class="modal__title" data-i18n="meals.cameraTitle">Take Meal Photo</h3>
-      <button class="modal__close" id="camera-close">✕</button>
-    </div>
-    <video id="camera-video" style="width:100%;border-radius:var(--radius-md)" playsinline></video>
-    <button class="btn btn--primary" id="camera-capture" style="width:100%;margin-top:var(--space-md)" data-i18n="meals.capture">📸 Capture</button>
-  </div>
-</div>
-
 <!-- Mobile nav -->
 <nav class="mobile-nav">
   <div class="mobile-nav__items">
-    <a href="index.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
+    <a href="index.html"      class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
     <a href="index.html#chat" class="mobile-nav__item"><span class="mobile-nav__item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
-    <a href="calendar.html" class="mobile-nav__item active"><span class="mobile-nav__item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
-    <a href="budget.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
-    <a href="reports.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
-    <a href="settings.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+    <a href="calendar.html"   class="mobile-nav__item active"><span class="mobile-nav__item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+    <a href="budget.html"     class="mobile-nav__item"><span class="mobile-nav__item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+    <a href="reports.html"    class="mobile-nav__item"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+    <a href="settings.html"   class="mobile-nav__item"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
   </div>
 </nav>
 
 <script type="module">
 import { initApp, applyToDOM } from './js/app.js';
-import { initCalendar } from './js/calendar.js';
-import { initMeals } from './js/meals.js';
+import { requireAuth }         from './js/auth.js';
+import { initCalendar }        from './js/calendar.js';
+import { initMeals }           from './js/meals.js';
 
+await requireAuth();
 await initApp();
-document.addEventListener('langchange', async () => { applyToDOM(); await initCalendar(); });
 await initCalendar();
 await initMeals();
 
-document.getElementById('meal-section-toggle')?.addEventListener('click', () => {
-  const sec = document.getElementById('meal-section');
-  sec.style.display = sec.style.display === 'none' ? '' : 'none';
+document.addEventListener('langchange', async () => {
+  applyToDOM();
+  await initCalendar();
+  await initMeals();
 });
 </script>
 </body>

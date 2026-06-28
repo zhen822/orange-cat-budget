@@ -1,0 +1,21 @@
+// firestore.rules
+// Deploy with: firebase deploy --only firestore:rules
+//
+// These rules ensure each user can ONLY read and write their own data.
+// No user can see another user's transactions, budgets, or settings.
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Each user has their own private space
+    match /users/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

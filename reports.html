@@ -29,6 +29,7 @@
       <a href="settings.html" class="nav-item"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
     </nav>
     <div class="sidebar__bottom">
+      <div id="user-badge"></div>
       <button id="theme-toggle"><span id="theme-icon">🌙</span></button>
     </div>
   </aside>
@@ -101,8 +102,10 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script type="module">
 import { initApp, t, applyToDOM } from './js/app.js';
+import { requireAuth } from './js/auth.js';
 import { renderReports, setupPeriodSwitcher } from './js/charts.js';
 
+await requireAuth();
 await initApp();
 document.addEventListener('langchange', async () => { applyToDOM(); await renderReports(); });
 await renderReports('daily');

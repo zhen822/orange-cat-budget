@@ -1,6 +1,37 @@
-# 💰 BudgetWise — Personal Budget Tracker
+<p align="center">
+  <img src="assets/icons/logo-icon.svg" width="96" height="96" alt="橘猫记账 logo">
+</p>
 
-A complete, production-ready personal budgeting web application built with HTML5, CSS3, and Vanilla JavaScript (ES6+ modules). No build tools, no frameworks — just open and run.
+<h1 align="center">橘猫记账 · OrangeCat Budget</h1>
+
+<p align="center">
+  A complete, bilingual personal finance app — built with pure HTML, CSS, and Vanilla JavaScript.<br>
+  No build tools. No frameworks. No account required. Just open and use.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-EN%20%7C%20中文-orange?style=flat-square" alt="Languages">
+  <img src="https://img.shields.io/badge/Storage-IndexedDB-blue?style=flat-square" alt="Storage">
+  <img src="https://img.shields.io/badge/Charts-Chart.js-pink?style=flat-square" alt="Charts">
+  <img src="https://img.shields.io/badge/Dependencies-0-green?style=flat-square" alt="Dependencies">
+</p>
+
+---
+
+## ✨ Features at a Glance
+
+| Feature | Description |
+|---------|-------------|
+| 💬 **Chat-Based Entry** | Record expenses in plain language — English or Chinese |
+| 🎯 **Budget Planning** | Set per-category budgets with traffic-light progress bars and daily safe-spend indicators |
+| 📅 **Calendar View** | Monthly grid showing daily income, expenses, and meal photos |
+| 📊 **Reports & Charts** | Spending trend, category donut, income vs expense, budget vs actual |
+| 🔄 **Recurring Transactions** | Monthly/weekly bills with one-tap "apply today" |
+| 🍱 **Meal Tracker** | Camera capture or photo upload, gallery grouped by date |
+| 🌐 **Bilingual UI** | Full English / 简体中文 support, switchable without page reload |
+| 🌙 **Dark Mode** | System-aware + manual toggle, mascot swaps automatically |
+| 📆 **Custom Cycle** | Set any start day (e.g. 25th → 24th) for all summaries and budgets |
+| 💾 **Local-First** | All data in IndexedDB — private, offline, instant |
 
 ---
 
@@ -9,219 +40,324 @@ A complete, production-ready personal budgeting web application built with HTML5
 ```
 budget-app/
 │
-├── index.html              ← Main hub: Dashboard, Chat, Transactions
-├── calendar.html           ← Monthly calendar + Meal tracker
-├── reports.html            ← Analytics, charts, summaries
-├── settings.html           ← Preferences, categories, recurring, goals
+├── index.html              ← Dashboard, Chat, and Transactions (hash-routed)
+├── budget.html             ← Budget Planning — category budgets, charts, alerts
+├── calendar.html           ← Monthly calendar + Meal photo tracker
+├── reports.html            ← Analytics: spending trends, category breakdown
+├── settings.html           ← Preferences, language, recurring, categories, goals
 │
 ├── css/
-│   ├── style.css           ← Global design tokens, reset, layout, components
-│   ├── dashboard.css       ← Dashboard-specific styles
-│   ├── calendar.css        ← Calendar grid and day-detail panel
-│   ├── reports.css         ← Charts, tables, chat, settings components
-│   └── darkmode.css        ← Dark mode supplemental overrides
+│   ├── style.css           ← Design tokens, reset, app shell, all shared components
+│   ├── dashboard.css       ← Quick stats row, savings goals, two-column layout
+│   ├── calendar.css        ← 7-column grid, day-detail slide panel, meal gallery
+│   ├── reports.css         ← Period switcher, chart cards, transaction table, chat UI
+│   ├── budget.css          ← Budget cards, traffic-light bars, summary grid, alerts
+│   └── darkmode.css        ← Dark mode overrides beyond CSS variable swaps
 │
 ├── js/
-│   ├── app.js              ← Bootstrap, theme, routing, formatters, NL parser
-│   ├── storage.js          ← IndexedDB abstraction layer (swap for backend)
-│   ├── dashboard.js        ← Dashboard rendering logic
-│   ├── chat.js             ← Chat-based expense entry + edit/delete
-│   ├── calendar.js         ← Monthly calendar, day-detail panel
-│   ├── charts.js           ← Chart.js integration (line, donut, bar)
-│   ├── recurring.js        ← Recurring transaction CRUD
-│   ├── meals.js            ← Meal photo capture, upload, gallery
-│   └── settings.js         ← User preferences, categories, savings goals
+│   ├── app.js              ← Bootstrap, theme, i18n proxy, formatters, modal/toast helpers
+│   ├── i18n.js             ← Translation engine: t(), tc(), applyToDOM(), bilingual NL parser
+│   ├── storage.js          ← IndexedDB abstraction layer — the only file touching the DB
+│   ├── budget-engine.js    ← Pure budget calculations: stats, summary, trend, alerts (no DOM)
+│   ├── budget.js           ← Budget page UI: CRUD, charts, dashboard widget
+│   ├── dashboard.js        ← Dashboard rendering: cards, recent tx, recurring, savings
+│   ├── chat.js             ← Chat entry: NL parse → confirm card → save → bubble
+│   ├── calendar.js         ← Monthly grid, prev/next, day-detail slide panel
+│   ├── charts.js           ← Chart.js wrappers: trend, donut, income vs expense
+│   ├── recurring.js        ← Recurring transaction CRUD + apply-today
+│   ├── meals.js            ← Camera capture, file upload, Base64 storage, gallery
+│   └── settings.js         ← Preferences, language switcher, categories, goals, export
+│
+├── locales/
+│   ├── en.json             ← English strings (334 keys across all features)
+│   └── zh-CN.json          ← Simplified Chinese strings (334 keys, identical structure)
 │
 ├── assets/
-│   ├── icons/              ← Custom icons (future use)
-│   ├── images/             ← App images (future use)
-│   └── fonts/              ← Local fonts if needed (currently via Google Fonts)
+│   └── icons/
+│       ├── logo-icon.svg           ← App icon — orange tabby face, light mode
+│       ├── logo-icon-dark.svg      ← App icon — dark background variant
+│       ├── logo-horizontal-light.svg ← Wordmark lockup, light bg
+│       ├── logo-horizontal-dark.svg  ← Wordmark lockup, dark bg
+│       └── favicon.svg             ← 32×32 browser tab icon
 │
-├── uploads/                ← Reserved for future backend file uploads
-│
-└── README.md               ← This file
+└── README.md
 ```
 
 ---
 
-## 🗂️ File Purposes
+## 🗂️ File Reference
 
-### HTML Pages
+### Pages
 
-| File | Purpose |
-|------|---------|
-| `index.html` | Main hub — contains Dashboard, Chat, and Transactions as switchable sections |
-| `calendar.html` | Monthly calendar showing daily totals + meal photo tracker |
-| `reports.html` | Interactive analytics with line, donut, and bar charts |
-| `settings.html` | Preferences, custom categories, recurring transactions, savings goals |
+| File | What it does |
+|------|-------------|
+| `index.html` | Main hub. Three sections in one page — Dashboard, Chat, and Transactions — switched via URL hash (`#chat`, `#transactions`). No reload. |
+| `budget.html` | Budget Planning. Set per-category budgets, view progress bars, see budget vs actual charts, and get daily safe-spend guidance. |
+| `calendar.html` | Monthly calendar grid. Click any day to see all transactions and meal photos for that date in a slide-out panel. |
+| `reports.html` | Analytics page. Period-selector (daily/weekly/monthly), spending trend line, category donut, 6-month income vs expenses bar chart. |
+| `settings.html` | All preferences. Language, theme, accounting cycle start day, currency, recurring transactions, custom categories, savings goals, JSON/CSV export. |
 
 ### JavaScript Modules
 
 | File | Purpose |
 |------|---------|
-| `app.js` | App bootstrap, theme management, navigation, currency/date formatters, NL parser, toast/modal helpers |
-| `storage.js` | All IndexedDB operations — the only file that touches the database. Swap this file to connect a backend |
-| `dashboard.js` | Dashboard summary cards, today/week spending, recent transactions, upcoming recurring, savings progress |
-| `chat.js` | Chat-style expense entry with NL parsing, confirmation cards, edit/delete bubbles |
-| `calendar.js` | Monthly grid, prev/next navigation, day-detail slide panel |
-| `charts.js` | Chart.js wrappers for spending trend, category donut, income-vs-expense bar chart |
-| `recurring.js` | CRUD for recurring transactions + one-click "apply today" |
-| `meals.js` | Camera capture via MediaDevices API, file upload, Base64 storage, gallery by date |
-| `settings.js` | Cycle day, currency, theme, category CRUD, savings goals, JSON/CSV export |
+| `app.js` | Bootstraps the app. Calls `initDB`, `seedCategories`, `initI18n`, then `applyTheme` and navigation setup. Re-exports `t()`, `tc()`, `setLang()`, and `applyToDOM()` so every other module imports i18n from one place. |
+| `i18n.js` | The translation engine. Loads locale JSON files on demand, provides `t(key, vars)` for string lookup, `tc(categoryName)` for bilingual category names, `applyToDOM()` to stamp `data-i18n` elements, fires `langchange` CustomEvent on switch. Also contains the bilingual NL parser that understands Chinese and English input. |
+| `storage.js` | Every IndexedDB read and write. The only file that knows the database exists. Swap this file's functions for `fetch()` calls to migrate to a backend — nothing else changes. Manages 7 stores: `transactions`, `categories`, `recurring`, `meals`, `settings`, `savingsGoals`, `categoryBudgets`. |
+| `budget-engine.js` | Pure calculation functions with zero DOM access: `getCycleMeta()`, `computeCategoryStats()`, `computeSummary()`, `buildTrendData()`, `generateAlerts()`. Fully testable in isolation. |
+| `budget.js` | Budget UI. Reads from `storage.js` and `budget-engine.js`, renders the summary card, alerts strip, per-category budget cards with traffic-light bars, three Chart.js charts, and the dashboard widget. |
+| `dashboard.js` | Dashboard rendering. Summary cards, today/week spending, recent transactions list, upcoming recurring bills, savings goals progress. |
+| `chat.js` | Chat interface. Passes user input to `parseNaturalLanguage()`, shows a confirm card with editable fields, then saves the transaction and renders a bubble. Supports edit and delete on any bubble. |
+| `calendar.js` | Monthly calendar grid with translated weekday headers. Clicking a date opens a slide panel showing all transactions and meal photos for that day. |
+| `charts.js` | All Chart.js wrappers. Destroys and recreates instances cleanly on period switch or language change to avoid canvas state bugs. |
+| `recurring.js` | Full CRUD for recurring transaction templates. "Apply today" creates a real transaction from a template in one click. |
+| `meals.js` | Meal photo entry. Accesses `navigator.mediaDevices` for camera capture, reads uploaded files as Base64 DataURLs, stores in IndexedDB, renders gallery grouped by date. |
+| `settings.js` | All settings logic. Language switcher calls `setLang()` which triggers a `langchange` event and re-renders every dynamic section without a page reload. |
 
 ### CSS Files
 
 | File | Purpose |
 |------|---------|
-| `style.css` | Design tokens (CSS custom properties), reset, app shell, sidebar, cards, buttons, toasts, modals, responsive breakpoints |
-| `dashboard.css` | Quick stats row, savings goals, upcoming recurring, two-column layout |
-| `calendar.css` | 7-column grid, cell states (today, has-data), day-detail slide panel, meal gallery |
-| `reports.css` | Period switcher, chart cards, transaction table, chat bubbles, confirm card, edit panel, settings sections |
-| `darkmode.css` | Dark mode overrides for components that need adjustments beyond CSS variable swaps |
+| `style.css` | Design token system (CSS custom properties for both light and dark modes), reset, app shell, sidebar, topbar, cards, buttons, modals, toasts, progress bars, tags, mobile nav, responsive breakpoints. |
+| `dashboard.css` | Quick stats row, savings goal items, upcoming recurring rows, two-column dashboard layout. |
+| `calendar.css` | 7-column CSS grid, cell state variants (today, has-data), day-detail slide-in panel, meal thumbnail gallery. |
+| `reports.css` | Period switcher tabs, chart card layout, transaction table, chat bubbles, confirm card, edit slide panel, settings section styling, recurring and meal cards. |
+| `budget.css` | Traffic-light CSS variables (`--budget-ok`, `--budget-warning`, `--budget-danger`, `--budget-over`), budget summary grid, per-category budget cards, progress bars, alert strips, dashboard widget rows. |
+| `darkmode.css` | Overrides for components that need more than a variable swap: logo image swap, calendar highlight tint, scrollbar styling. |
+
+### Locale Files
+
+| File | Contents |
+|------|---------|
+| `locales/en.json` | 334 English strings covering nav, dashboard, chat, transactions, calendar, meals, reports, budget, settings, categories, toast messages, and confirm dialogs. |
+| `locales/zh-CN.json` | 334 Simplified Chinese strings in identical structure. All keys match `en.json` exactly — adding a third language means creating a new file only. |
 
 ---
 
-## 🚀 How to Run Locally
+## 🌐 Live Demo
 
-### Option 1 — VS Code Live Server (Recommended)
-1. Install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
+**[→ Open OrangeCat Budget](https://zhen822.github.io/orange-cat-budget)**
+
+> Replace the link above with your actual GitHub Pages URL after enabling it below.
+
+---
+
+## 🚀 Deployment — GitHub Pages (Free)
+
+Since the project is already on GitHub, one setting is all it takes to get a public link.
+
+1. Go to your repository on GitHub
+2. Click **Settings** → **Pages** (in the left sidebar)
+3. Under **Branch**, select `main` and folder `/ (root)`
+4. Click **Save**
+
+Your live URL appears at the top of the Pages settings within about a minute:
+```
+https://zhen822.github.io/orange-cat-budget
+```
+
+Share that link — anyone can open it in a browser, no install required.
+
+> ⚠️ Make sure `index.html` is at the **root** of the repo, not inside a subfolder. If it's inside a folder like `budget-app/`, move the contents up one level or point the Pages source at that subfolder.
+
+---
+
+## 🛠️ Running Locally
+
+The app uses ES6 modules (`type="module"`) which require HTTP. **Do not open `index.html` directly as a `file://` URL** — the browser will block module imports.
+
+### VS Code Live Server (quickest)
+1. Install the [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 2. Right-click `index.html` → **Open with Live Server**
-3. Browser opens at `http://127.0.0.1:5500`
+3. Opens at `http://127.0.0.1:5500`
 
-### Option 2 — Python HTTP Server
+### Python
 ```bash
-cd budget-app
 python -m http.server 8080
-# Open http://localhost:8080
+# → http://localhost:8080
 ```
 
-### Option 3 — Node.js HTTP Server
+### Node.js
 ```bash
-npm install -g http-server
-cd budget-app
-http-server -p 8080
-# Open http://localhost:8080
+npx http-server -p 8080
+# → http://localhost:8080
 ```
 
-### Option 4 — PHP
-```bash
-cd budget-app
-php -S localhost:8080
-```
-
-> ⚠️ **Important:** The app uses ES6 modules (`type="module"`) and must be served over HTTP/HTTPS. Opening `index.html` directly as `file://` will fail due to CORS restrictions on modules.
+No `npm install`. No build step. No environment variables. First launch seeds default categories automatically.
 
 ---
 
-## ✨ Core Features
+## 💬 Chat — Natural Language Entry
 
-### Chat-Based Entry
-Type naturally in the chat:
-- `"spent 45 on lunch"` → Expense, Food, RM 45
-- `"paid 250 electricity bill"` → Expense, Bills, RM 250
-- `"received 3500 salary"` → Income, Salary, RM 3500
-- `"saved 500 emergency fund"` → Savings, Emergency Fund, RM 500
+The chat interface understands both English and Chinese input. Type anything that contains an amount and the parser figures out the rest.
 
-Use quick-buttons for one-tap common entries, or the **+ Add** modal for precise entry.
+**English examples**
+```
+spent 45 on lunch          → Expense · Food · 45
+paid 200 electricity bill  → Expense · Bills · 200
+received 3500 salary       → Income · Salary · 3500
+saved 500 emergency fund   → Savings · Emergency Fund · 500
+```
 
-### Calendar
-- Monthly grid with daily income (green) and expense (red) totals
-- Click any date to open a slide panel with all transactions + meal photos
-- Navigate months with prev/next buttons
+**Chinese examples**
+```
+午餐花了35        → 支出 · 餐饮 · 35
+电费200           → 支出 · 账单 · 200
+收到工资3500      → 收入 · 工资 · 3500
+存入应急基金500   → 储蓄 · 应急基金 · 500
+```
 
-### Recurring Transactions
-- Define monthly or weekly recurring items (rent, salary, Netflix, etc.)
-- Click **Apply** to instantly record a recurring item as today's transaction
+After parsing, a confirm card appears with editable fields (amount, category, date, note) before saving. Every saved transaction shows as a chat bubble with edit ✏️ and delete 🗑️ controls.
 
-### Meal Tracker
-- Capture photos from device camera or upload images
-- Photos stored as Base64 in IndexedDB — no server needed
-- Gallery grouped by date, linkable to calendar view
+---
 
-### Reports
-- Spending trend line chart (daily/weekly/monthly)
-- Category breakdown donut chart
-- Income vs Expenses bar chart (last 6 months)
-- Cycle summary cards
+## 🎯 Budget Planning
 
-### Custom Accounting Cycle
-Set your cycle start day (e.g. 25th) in Settings. All summaries and reports respect this cycle instead of the calendar month.
+Set a monthly budget for any expense category, then the app tracks it against your custom accounting cycle.
+
+**Per-category stats**
+- Budget amount, amount spent, amount remaining
+- Percentage used with a traffic-light progress bar
+- Average daily spending so far this cycle
+- Recommended safe daily spend for the rest of the cycle
+
+**Traffic-light thresholds**
+
+| Color | Range | Meaning |
+|-------|-------|---------|
+| 🟢 Green | 0–60% | On track |
+| 🟡 Yellow | 60–85% | Watch spending |
+| 🟠 Orange | 85–100% | Near limit |
+| 🔴 Red | > 100% | Over budget |
+
+**Dashboard widget** — The "Safe to Spend Today" card on the dashboard shows the combined recommended daily amount across all budgeted categories, with an emoji status indicator.
+
+**Alerts** — Inline warnings appear at 80%, 90%, and 100%+ for each category.
+
+**Three budget charts**
+1. Budget vs Actual — grouped bar chart per category
+2. Spending by Category — donut chart of actual spend
+3. Cumulative Spending vs Ideal Pace — line chart overlaying actual vs a straight-line ideal trajectory through the cycle
+
+---
+
+## 🌐 Bilingual Support (i18n)
+
+Switch between **English** and **简体中文** in Settings → Language. The switch is instant — no page reload.
+
+**How it works**
+- `locales/en.json` and `locales/zh-CN.json` contain all UI strings
+- `js/i18n.js` loads the selected locale on startup, exposes `t(key)` for string lookup
+- Static HTML text uses `data-i18n="key"` attributes; `applyToDOM()` stamps them on load and on language change
+- Dynamic content (transaction lists, budget cards, charts) re-renders via a `langchange` CustomEvent
+- `tc(categoryName)` translates system category names while leaving user-created categories unchanged
+- The NL parser in `i18n.js` handles both languages in the same function — keywords from both locales are checked simultaneously
+
+**Adding a third language**
+1. Create `locales/xx.json` with the same 334 keys
+2. Add `'xx': './locales/xx.json'` to the `LOCALES` map in `i18n.js`
+3. Add an `<option value="xx">` to the language selector in `settings.html`
 
 ---
 
 ## 💾 Data Storage
 
-All data is stored in **IndexedDB** in the user's browser. The `storage.js` module is the sole entry point — all reads/writes go through it. To migrate to a backend:
+All data lives in **IndexedDB** in the user's browser — no server, no account, no sync. `storage.js` is the single gateway; no other module accesses the database directly.
 
-1. Replace the functions in `storage.js` with `fetch()` calls to your API
-2. The rest of the app requires no changes
+**Stores (DB version 2)**
 
-Stores:
-- `transactions` — all income, expense, savings entries
-- `categories` — default + custom categories
-- `recurring` — recurring transaction templates
-- `meals` — meal entries with Base64 photo data
-- `settings` — key-value preferences
-- `savingsGoals` — savings targets
+| Store | Contents |
+|-------|---------|
+| `transactions` | All income, expense, and savings entries |
+| `categories` | Default and user-created categories |
+| `recurring` | Recurring transaction templates |
+| `meals` | Meal entries with Base64 photo data |
+| `settings` | Key-value preferences (theme, lang, currency, cycle start day) |
+| `savingsGoals` | Savings targets |
+| `categoryBudgets` | Per-category budget amounts and enabled/disabled state |
+
+**Migrating to a backend** — replace the functions in `storage.js` with `fetch()` calls to your API. Every other file remains unchanged because nothing else knows where data comes from.
 
 ---
 
 ## 🎨 Design System
 
-CSS custom properties drive the entire visual system. Key tokens:
+All visual decisions live in CSS custom properties on `:root`, with a full set of dark mode overrides on `[data-theme="dark"]`.
 
 ```css
---color-primary: #5B6AF0      /* Indigo brand accent */
---color-income:  #16A34A      /* Green */
---color-expense: #DC2626      /* Red */
---color-savings: #2563EB      /* Blue */
---font-body: 'Plus Jakarta Sans'
---font-mono: 'JetBrains Mono'  /* Used for amounts */
+/* Brand */
+--color-primary:  #5B6AF0   /* Indigo */
+
+/* Semantic */
+--color-income:   #16A34A   /* Green */
+--color-expense:  #DC2626   /* Red */
+--color-savings:  #2563EB   /* Blue */
+
+/* Budget traffic-light */
+--budget-ok:      #16A34A
+--budget-warning: #CA8A04
+--budget-danger:  #EA580C
+--budget-over:    #DC2626
+
+/* Typography */
+--font-body: 'Plus Jakarta Sans', -apple-system, sans-serif
+--font-mono: 'JetBrains Mono', monospace  /* all currency amounts */
 ```
 
-Dark mode is toggled by setting `data-theme="dark"` on `<html>`.
+Dark mode is activated by `document.documentElement.setAttribute('data-theme', 'dark')`. The mascot logo (`logo-icon.svg` / `logo-icon-dark.svg`) swaps automatically via both a `<picture>` `prefers-color-scheme` source and a JS `applyTheme()` call for the in-app toggle.
 
 ---
 
-## 🔮 Future Enhancements (Architecture Ready)
+## 🔮 Architecture — Ready for These Extensions
 
-| Feature | Implementation Path |
-|---------|-------------------|
-| Cloud sync | Replace `storage.js` with REST/GraphQL API calls |
-| Auth | Add JWT token header to storage API calls |
-| OCR receipt scan | Integrate Google Vision API in `chat.js` |
-| AI categorisation | Call Claude API in `parseNaturalLanguage()` |
-| Push notifications | Add Service Worker + Push API |
-| PDF reports | Use jsPDF in `charts.js` |
-| Excel export | Use SheetJS in `settings.js` |
-| Multi-currency | Extend `AppState` currency map + exchange rate API |
-| Budget limits | Add a `budgets` store with alerts in `dashboard.js` |
-
----
-
-## ✅ Best Practices Used
-
-- **ES6 modules** — clean import/export, no global pollution
-- **IndexedDB abstraction** — all DB code in one file, swap-ready
-- **CSS custom properties** — theming without JavaScript
-- **Semantic HTML** — proper `<nav>`, `<main>`, `<header>`, `<aside>`
-- **Mobile-first responsive** — fluid grid, mobile nav, safe area insets
-- **Accessible** — keyboard focus visible, ARIA-compatible structure
-- **Reduced motion** — `prefers-reduced-motion` media query respected
-- **No external dependencies** at runtime (except Chart.js via CDN)
-- **Well-commented code** — every module and function documented
-- **Error handling** — try/catch on all async storage operations
-- **Toast feedback** — every user action confirms with a non-blocking toast
+| Enhancement | Where to plug in |
+|-------------|-----------------|
+| Cloud sync | Replace `storage.js` functions with `fetch()` API calls |
+| User auth | Add JWT header injection in `storage.js` |
+| OCR receipt scan | Add a file input handler in `chat.js`, call a Vision API |
+| AI expense categorisation | Replace `parseNLBilingual()` in `i18n.js` with an LLM call |
+| AI budgeting summary | Add a summary panel in `budget.js` calling an LLM with cycle data |
+| Push notifications | Add a Service Worker that checks budget thresholds on sync |
+| PDF export | Import jsPDF in `charts.js`, capture canvas + summary data |
+| Excel export | Import SheetJS in `settings.js`, dump `getAllTransactions()` |
+| Multi-currency | Add an exchange rate fetch in `app.js`, convert amounts in `formatCurrency()` |
+| A third language | Add `locales/xx.json` + one line in `i18n.js` LOCALES map |
 
 ---
 
-## 📋 Installation Summary
+## ✅ Engineering Decisions
 
-```bash
-# 1. Download / unzip the project
-# 2. Serve it (pick any method above)
-# 3. Open in a modern browser (Chrome, Firefox, Edge, Safari)
-# 4. No npm install, no build step, no configuration needed
-```
+**ES6 modules throughout** — clean import/export, no global scope pollution, clear dependency graph.
 
-First launch automatically seeds default categories. Your data stays in your browser — private, offline-capable, and instant.
+**IndexedDB behind a single abstraction** — `storage.js` is the only file that knows the database exists. This is the swap point for a backend without touching any UI logic.
+
+**i18n engine decoupled from app logic** — `i18n.js` knows nothing about budgets or transactions. `app.js` re-exports `t()` so every module imports from one place. Locale files are plain JSON — no runtime bundling needed.
+
+**Budget engine is pure functions** — `budget-engine.js` has zero DOM access and zero storage calls. It takes data in, returns computed stats out. This makes the calculations easy to test and reuse across the budget page and the dashboard widget without duplication.
+
+**No-reload language switch** — `setLang()` loads the new locale, fires `langchange`, and each module's own listener re-renders its own section. The URL, scroll position, and open panels are all preserved.
+
+**CSS custom property theming** — dark mode is a single attribute on `<html>`. No class toggling across components, no JavaScript-driven style overrides.
+
+**Chart.js instance management** — every chart is stored in a `chartInstances` map and explicitly destroyed before recreation. This prevents canvas memory leaks when switching periods or languages.
+
+---
+
+## 📋 Get Started
+
+**Easiest — use the live link (GitHub Pages):**
+
+1. Enable GitHub Pages in your repo Settings → Pages → Branch: `main`
+2. Share `https://zhen822.github.io/orange-cat-budget` with anyone
+
+**First time using the app:**
+
+1. Open the link in any modern browser
+2. Go to **Settings** to choose your language (English / 简体中文), currency, and cycle start day
+3. Go to **Budget** to set monthly limits for each expense category
+4. Use **Chat** to record your first expense in plain language — try *"lunch 15"* or *"午餐15"*
+5. Check **Dashboard** for today's safe daily spend indicator
+
+---
+
+*橘猫记账 — Your money, your language, your pace.*

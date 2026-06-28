@@ -47,6 +47,7 @@
       </a>
     </nav>
     <div class="sidebar__bottom">
+      <div id="user-badge"></div>
       <button id="theme-toggle" title="Toggle dark mode">
         <span id="theme-icon">🌙</span>
       </button>
@@ -58,7 +59,7 @@
 
     <!-- Top bar -->
     <header class="topbar">
-      <button class="icon-btn" id="menu-toggle" style="display:none">☰</button>
+      <button class="icon-btn" id="menu-toggle">☰</button>
       <h1 class="topbar__title" id="page-title">Dashboard</h1>
       <div class="topbar__actions">
         <button class="btn btn--primary btn--sm" id="quick-add-btn" data-i18n="topbar.add">+ Add</button>
@@ -303,23 +304,14 @@
   </div>
 </div>
 
-<!-- ── Camera Modal ────────────────────────────────────────── -->
-<div class="modal" id="camera-modal">
-  <div class="modal__box">
-    <div class="modal__header">
-      <h3 class="modal__title">Take Photo</h3>
-      <button class="modal__close" id="camera-close">✕</button>
-    </div>
-    <video id="camera-video" style="width:100%;border-radius:var(--radius-md)" playsinline></video>
-    <button class="btn btn--primary" id="camera-capture" style="width:100%;margin-top:var(--space-md)">📸 Capture</button>
-  </div>
-</div>
+
 
 <!-- Chart.js CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 
 <script type="module">
 import { initApp, AppState, formatCurrency, formatDate, todayStr, getCurrentCycle, showToast, openModal, closeModal, t, tc, applyToDOM } from './js/app.js';
+import { requireAuth } from './js/auth.js';
 import { renderDashboard } from './js/dashboard.js';
 import { renderBudgetWidget } from './js/budget.js';
 import { initChat } from './js/chat.js';
@@ -329,7 +321,21 @@ import {
 } from './js/storage.js';
 
 // ── Bootstrap ──────────────────────────────────────────────
+await requireAuth();
 await initApp();
+
+// ── Hamburger menu (mobile) ───────────────────────────────
+document.getElementById('menu-toggle')?.addEventListener('click', () => {
+  document.getElementById('sidebar')?.classList.toggle('sidebar--open');
+});
+document.addEventListener('click', (e) => {
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar?.classList.contains('sidebar--open') &&
+      !sidebar.contains(e.target) &&
+      e.target.id !== 'menu-toggle') {
+    sidebar.classList.remove('sidebar--open');
+  }
+});
 
 // Re-render UI text on language change
 document.addEventListener('langchange', async () => {
