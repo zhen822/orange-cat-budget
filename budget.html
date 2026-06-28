@@ -73,12 +73,12 @@
           <form id="budget-add-form" class="budget-add-form">
             <div class="budget-form-row">
               <label>
-                Category
+                <span data-i18n="budget.categoryLabel">Category</span>
                 <select id="budget-cat-select" class="field"></select>
               </label>
               <label>
-                Monthly Budget ({{ currency }})
-                <input type="number" id="budget-amount-input" class="field" placeholder="e.g. 800" min="0.01" step="0.01">
+                <span data-i18n="budget.amountLabel">Budget Amount</span>
+                <input type="number" id="budget-amount-input" data-i18n-placeholder="budget.amountPlaceholder" class="field" placeholder="e.g. 800" min="0.01" step="0.01">
               </label>
               <div class="budget-form-btn">
                 <button type="submit" class="btn btn--primary" data-i18n="budget.setBudget">Set Budget</button>
@@ -133,11 +133,11 @@
     </div>
     <input type="hidden" id="budget-edit-id">
     <label style="display:flex;flex-direction:column;gap:6px;margin-bottom:var(--space-lg)">
-      Budget Amount
+      <span data-i18n="budget.editAmountLabel">Budget Amount</span>
       <input type="number" id="budget-edit-amount" class="field" placeholder="0.00" min="0.01" step="0.01">
     </label>
     <div style="display:flex;gap:var(--space-sm);justify-content:flex-end">
-      <button class="btn btn--ghost" id="budget-edit-cancel-btn" onclick="document.getElementById('budget-edit-cancel').click()">Cancel</button>
+      <button class="btn btn--ghost" data-i18n="budget.editCancel" id="budget-edit-cancel-btn" onclick="document.getElementById('budget-edit-cancel').click()">Cancel</button>
       <button class="btn btn--primary" id="budget-edit-save" data-i18n="budget.editSave">Save Changes</button>
     </div>
   </div>

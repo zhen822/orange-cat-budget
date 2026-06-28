@@ -182,29 +182,29 @@
       <div class="edit-panel" id="edit-panel">
         <h3 class="edit-panel__title" data-i18n="chat.editTitle">Edit Transaction</h3>
         <div class="edit-panel__fields">
-          <label>Amount <input type="number" id="edit-amount" class="field" step="0.01" min="0"></label>
-          <label>Category <select id="edit-category" class="field"></select></label>
-          <label>Date <input type="date" id="edit-date" class="field"></label>
-          <label>Note <input type="text" id="edit-description" class="field" placeholder="Optional note"></label>
+          <label><span data-i18n="chat.fieldAmount">Amount</span> <input type="number" id="edit-amount" class="field" step="0.01" min="0"></label>
+          <label><span data-i18n="chat.fieldCategory">Category</span> <select id="edit-category" class="field"></select></label>
+          <label><span data-i18n="chat.fieldDate">Date</span> <input type="date" id="edit-date" class="field"></label>
+          <label><span data-i18n="chat.fieldNote">Note</span> <input type="text" id="edit-description" class="field" data-i18n-placeholder="chat.fieldNotePlaceholder" placeholder="Optional note"></label>
         </div>
         <div class="edit-panel__actions">
-          <button class="btn btn--ghost" id="edit-cancel">Cancel</button>
-          <button class="btn btn--primary" id="edit-save">Save Changes</button>
+          <button class="btn btn--ghost" id="edit-cancel" data-i18n="chat.editCancel">Cancel</button>
+          <button class="btn btn--primary" id="edit-save" data-i18n="chat.editSave">Save Changes</button>
         </div>
       </div>
 
       <!-- Input area -->
       <div class="chat-input-area">
         <div class="chat-quick-btns">
-          <button class="btn btn--ghost btn--sm" data-quick="spent 15 on lunch">🍔 Lunch</button>
-          <button class="btn btn--ghost btn--sm" data-quick="paid 120 for groceries">🛒 Groceries</button>
-          <button class="btn btn--ghost btn--sm" data-quick="received salary 3500">💼 Salary</button>
-          <button class="btn btn--ghost btn--sm" data-quick="saved 500 emergency fund">🛡️ Save</button>
-          <button class="btn btn--ghost btn--sm" data-quick="paid grab 18">🚗 Transport</button>
+          <button class="btn btn--ghost btn--sm" data-quick="spent 15 on lunch" data-i18n-quick="chat.quickLunchInput" data-i18n="chat.quickLunch">🍔 Lunch</button>
+          <button class="btn btn--ghost btn--sm" data-quick="paid 120 for groceries" data-i18n-quick="chat.quickGrocInput" data-i18n="chat.quickGroceries">🛒 Groceries</button>
+          <button class="btn btn--ghost btn--sm" data-quick="received salary 3500" data-i18n-quick="chat.quickSalaryInput" data-i18n="chat.quickSalary">💼 Salary</button>
+          <button class="btn btn--ghost btn--sm" data-quick="saved 500 emergency fund" data-i18n-quick="chat.quickSaveInput" data-i18n="chat.quickSave">🛡️ Save</button>
+          <button class="btn btn--ghost btn--sm" data-quick="paid grab 18" data-i18n-quick="chat.quickTransInput" data-i18n="chat.quickTransport">🚗 Transport</button>
         </div>
         <div class="chat-input-row">
-          <textarea id="chat-input" placeholder="e.g. spent 45 on dinner…" rows="1"></textarea>
-          <button class="btn btn--primary" id="chat-send">Send</button>
+          <textarea id="chat-input" data-i18n-placeholder="chat.inputPlaceholder" placeholder="e.g. spent 45 on dinner…" rows="1"></textarea>
+          <button class="btn btn--primary" id="chat-send" data-i18n="chat.send">Send</button>
         </div>
       </div>
     </section>
@@ -213,22 +213,22 @@
     <section class="page-content" id="section-transactions" style="display:none">
 
       <div class="section__header" style="margin-bottom:var(--space-lg)">
-        <h2 class="section__title">All Transactions</h2>
-        <button class="btn btn--primary btn--sm" id="tx-add-btn">+ Add</button>
+        <h2 class="section__title" data-i18n="transactions.title">All Transactions</h2>
+        <button class="btn btn--primary btn--sm" id="tx-add-btn" data-i18n="transactions.addBtn">+ Add</button>
       </div>
 
       <!-- Filter bar -->
       <div class="filter-bar">
-        <input type="text" id="tx-search" placeholder="Search…">
+        <input type="text" id="tx-search" data-i18n-placeholder="transactions.searchPlaceholder" placeholder="Search…">
         <select id="tx-filter-type">
-          <option value="">All types</option>
-          <option value="expense">Expense</option>
-          <option value="income">Income</option>
-          <option value="savings">Savings</option>
+          <option value="" data-i18n="transactions.filterAll">All types</option>
+          <option value="expense" data-i18n="transactions.filterExpense">Expense</option>
+          <option value="income" data-i18n="transactions.filterIncome">Income</option>
+          <option value="savings" data-i18n="transactions.filterSavings">Savings</option>
         </select>
         <input type="date" id="tx-filter-from">
         <input type="date" id="tx-filter-to">
-        <button class="btn btn--ghost btn--sm" id="tx-filter-clear">Clear</button>
+        <button class="btn btn--ghost btn--sm" id="tx-filter-clear" data-i18n="transactions.clearFilters">Clear</button>
       </div>
 
       <div class="tx-table-wrapper">
@@ -284,9 +284,9 @@
     </div>
 
     <div style="display:flex;gap:var(--space-xs);margin-bottom:var(--space-lg)">
-      <button class="btn btn--ghost btn--sm" data-type-tab="expense" style="flex:1">Expense</button>
-      <button class="btn btn--ghost btn--sm" data-type-tab="income" style="flex:1">Income</button>
-      <button class="btn btn--ghost btn--sm" data-type-tab="savings" style="flex:1">Savings</button>
+      <button class="btn btn--ghost btn--sm" data-type-tab="expense" style="flex:1" data-i18n="transactions.filterExpense">Expense</button>
+      <button class="btn btn--ghost btn--sm" data-type-tab="income" style="flex:1" data-i18n="transactions.filterIncome">Income</button>
+      <button class="btn btn--ghost btn--sm" data-type-tab="savings" style="flex:1" data-i18n="transactions.filterSavings">Savings</button>
     </div>
 
     <div style="display:flex;flex-direction:column;gap:var(--space-md)">
@@ -297,8 +297,8 @@
     </div>
 
     <div style="display:flex;gap:var(--space-sm);justify-content:flex-end;margin-top:var(--space-lg)">
-      <button class="btn btn--ghost" id="qa-cancel">Cancel</button>
-      <button class="btn btn--primary" id="qa-save">Save</button>
+      <button class="btn btn--ghost" id="qa-cancel" data-i18n="chat.editCancel">Cancel</button>
+      <button class="btn btn--primary" id="qa-save" data-i18n="chat.save">Save</button>
     </div>
   </div>
 </div>

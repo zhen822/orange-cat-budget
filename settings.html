@@ -92,32 +92,32 @@
 
         <form id="recurring-form" style="margin-bottom:var(--space-lg)">
           <div class="grid-2" style="gap:var(--space-md);margin-bottom:var(--space-md)">
-            <label>Name <input type="text" id="rec-name" class="field" placeholder="e.g. Monthly Rent"></label>
-            <label>Amount <input type="number" id="rec-amount" class="field" placeholder="0.00" step="0.01" min="0"></label>
-            <label>Type
+            <label><span data-i18n="settings.recName">Name</span> <input type="text" id="rec-name" class="field" data-i18n-placeholder="settings.recNamePlaceholder" placeholder="e.g. Monthly Rent"></label>
+            <label><span data-i18n="settings.recAmount">Amount</span> <input type="number" id="rec-amount" class="field" placeholder="0.00" step="0.01" min="0"></label>
+            <label><span data-i18n="settings.recType">Type</span>
               <select id="rec-type" class="field">
-                <option value="expense">Expense</option>
-                <option value="income">Income</option>
-                <option value="savings">Savings</option>
+                <option value="expense" data-i18n="settings.recTypeExpense">Expense</option>
+                <option value="income" data-i18n="settings.recTypeIncome">Income</option>
+                <option value="savings" data-i18n="settings.recTypeSavings">Savings</option>
               </select>
             </label>
-            <label>Category <select id="rec-category" class="field"></select></label>
-            <label>Frequency
+            <label><span data-i18n="settings.recCategory">Category</span> <select id="rec-category" class="field"></select></label>
+            <label><span data-i18n="settings.recFrequency">Frequency</span>
               <select id="rec-frequency" class="field">
-                <option value="monthly">Monthly</option>
-                <option value="weekly">Weekly</option>
+                <option value="monthly" data-i18n="settings.recFreqMonthly">Monthly</option>
+                <option value="weekly" data-i18n="settings.recFreqWeekly">Weekly</option>
               </select>
             </label>
-            <label>Day of Month
+            <label><span data-i18n="settings.recDayOfMonth">Day of Month</span>
               <input type="number" id="rec-day-of-month" class="field" min="1" max="28" value="1">
             </label>
-            <label>Icon (emoji)
+            <label><span data-i18n="settings.recIcon">Icon (emoji)</span>
               <input type="text" id="rec-icon" class="field" placeholder="🔄" maxlength="4">
             </label>
           </div>
           <div style="display:flex;gap:var(--space-sm)">
-            <button type="button" class="btn btn--ghost" id="rec-cancel">Cancel</button>
-            <button type="submit" class="btn btn--primary">Add Recurring</button>
+            <button type="button" class="btn btn--ghost" id="rec-cancel" data-i18n="settings.recCancel">Cancel</button>
+            <button type="submit" class="btn btn--primary" data-i18n="settings.recAdd">Add Recurring</button>
           </div>
         </form>
 
@@ -130,18 +130,18 @@
 
         <form id="cat-form" style="margin-bottom:var(--space-lg)">
           <div class="grid-2" style="gap:var(--space-md);margin-bottom:var(--space-md)">
-            <label>Name <input type="text" id="cat-name" class="field" placeholder="Category name"></label>
-            <label>Type
+            <label><span data-i18n="settings.catName">Name</span> <input type="text" id="cat-name" class="field" data-i18n-placeholder="settings.catNamePlaceholder" placeholder="Category name"></label>
+            <label><span data-i18n="settings.catType">Type</span>
               <select id="cat-type" class="field">
-                <option value="expense">Expense</option>
-                <option value="income">Income</option>
-                <option value="savings">Savings</option>
+                <option value="expense" data-i18n="settings.recTypeExpense">Expense</option>
+                <option value="income" data-i18n="settings.recTypeIncome">Income</option>
+                <option value="savings" data-i18n="settings.recTypeSavings">Savings</option>
               </select>
             </label>
-            <label>Icon (emoji) <input type="text" id="cat-icon" class="field" placeholder="📦" maxlength="4"></label>
-            <label>Color <input type="color" id="cat-color" class="field" value="#5B6AF0" style="height:42px;padding:4px"></label>
+            <label><span data-i18n="settings.catIcon">Icon (emoji)</span> <input type="text" id="cat-icon" class="field" placeholder="📦" maxlength="4"></label>
+            <label><span data-i18n="settings.catColor">Color</span> <input type="color" id="cat-color" class="field" value="#5B6AF0" style="height:42px;padding:4px"></label>
           </div>
-          <button type="submit" class="btn btn--primary">Add Category</button>
+          <button type="submit" class="btn btn--primary" data-i18n="settings.catAdd">Add Category</button>
         </form>
 
         <div id="categories-list"></div>
@@ -153,10 +153,10 @@
 
         <form id="goal-form" style="margin-bottom:var(--space-lg)">
           <div class="grid-2" style="gap:var(--space-md);margin-bottom:var(--space-md)">
-            <label>Goal Name <input type="text" id="goal-name" class="field" placeholder="e.g. Japan Trip"></label>
-            <label>Target Amount <input type="number" id="goal-target" class="field" placeholder="5000" min="0" step="0.01"></label>
+            <label><span data-i18n="settings.goalName">Goal Name</span> <input type="text" id="goal-name" class="field" data-i18n-placeholder="settings.goalNamePlaceholder" placeholder="e.g. Japan Trip"></label>
+            <label><span data-i18n="settings.goalTarget">Target Amount</span> <input type="number" id="goal-target" class="field" placeholder="5000" min="0" step="0.01"></label>
           </div>
-          <button type="submit" class="btn btn--primary">Add Goal</button>
+          <button type="submit" class="btn btn--primary" data-i18n="settings.goalAdd">Add Goal</button>
         </form>
 
         <div id="goals-list"></div>
@@ -165,7 +165,7 @@
       <!-- Data Management -->
       <div class="settings-section">
         <h3 class="settings-section__title" data-i18n="settings.dataManagement">💾 Data Management</h3>
-        <p class="muted" style="margin-bottom:var(--space-md)">Export your data for backup or analysis. All data stays on your device.</p>
+        <p class="muted" style="margin-bottom:var(--space-md)" data-i18n="settings.dataHint">Export your data for backup or analysis. All data stays on your device.</p>
         <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap">
           <button class="btn btn--ghost" id="export-btn" data-i18n="settings.exportJson">📥 Export JSON Backup</button>
           <button class="btn btn--ghost" id="export-csv-btn" data-i18n="settings.exportCsv">📊 Export CSV</button>
