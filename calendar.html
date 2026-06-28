@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>橘猫记账 OrangeCat Budget — Calendar</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/calendar.css">
+  <link rel="stylesheet" href="css/darkmode.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar__logo">
+      <picture class="sidebar__logo-picture">
+        <source srcset="assets/icons/logo-icon-dark.svg" media="(prefers-color-scheme: dark)">
+        <img src="assets/icons/logo-icon.svg" alt="橘猫记账" class="sidebar__logo-img" width="38" height="38">
+      </picture>
+      <div class="sidebar__logo-text-wrap">
+        <span class="sidebar__logo-text">OrangeCat</span>
+        <span class="sidebar__logo-sub">橘猫记账</span>
+      </div>
+    </div>
+        <nav class="sidebar__nav">
+      <a href="index.html"              class="nav-item"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="index.html#calc"         class="nav-item"><span class="nav-item__icon">🧮</span> <span data-i18n="nav.calc">Add</span></a>
+      <a href="calendar.html"           class="nav-item active"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+      <a href="index.html#transactions" class="nav-item"><span class="nav-item__icon">📋</span> <span data-i18n="nav.transactions">Transactions</span></a>
+      <a href="budget.html"             class="nav-item"><span class="nav-item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+      <a href="reports.html"            class="nav-item"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+      <a href="settings.html"           class="nav-item"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+    </nav>
+    <div class="sidebar__bottom">
+      <button id="theme-toggle"><span id="theme-icon">🌙</span></button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <h1 class="topbar__title" data-i18n="calendar.title">Calendar</h1>
+    </header>
+
+    <div class="page-content">
+      <div class="section">
+        <div class="cal-controls">
+          <button class="btn btn--ghost btn--sm" id="cal-prev" data-i18n="calendar.prev">← Prev</button>
+          <span id="cal-month-label">Loading...</span>
+          <button class="btn btn--ghost btn--sm" id="cal-today" data-i18n="calendar.today">Today</button>
+          <button class="btn btn--ghost btn--sm" id="cal-next" data-i18n="calendar.next">Next →</button>
+        </div>
+        <div class="cal-grid-wrapper">
+          <div id="calendar-grid"></div>
+        </div>
+        <p class="muted" style="margin-top:var(--space-sm);font-size:.72rem" data-i18n="calendar.legend">
+          💚 Green = income   🔴 Red = expense   Click any date to see details
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Day detail panel -->
+  <div class="day-detail" id="day-detail">
+    <div class="day-detail__header">
+      <h3 class="day-detail__date" id="day-detail-date">—</h3>
+      <button class="icon-btn" id="day-detail-close">✕</button>
+    </div>
+    <div id="day-detail-body"></div>
+  </div>
+
+</div>
+
+<!-- Mobile nav -->
+<nav class="mobile-nav">
+    <div class="mobile-nav__items">
+    <a href="index.html"      class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
+    <a href="index.html#calc" class="mobile-nav__item"><span class="mobile-nav__item__icon">🧮</span> <span data-i18n="nav.calc">Add</span></a>
+    <a href="budget.html"     class="mobile-nav__item"><span class="mobile-nav__item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+    <a href="reports.html"    class="mobile-nav__item"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+    <a href="settings.html"   class="mobile-nav__item"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+  </div>
+</nav>
+
+<script type="module">
+import { initApp, applyToDOM } from './js/app.js';
+import { initCalendar }        from './js/calendar.js';
+
+await initApp();
+await initCalendar();
+
+document.addEventListener('langchange', async () => {
+  applyToDOM();
+  await initCalendar();
+});
+</script>
+</body>
+</html>

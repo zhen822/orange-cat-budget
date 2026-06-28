@@ -20,17 +20,16 @@
         <span class="sidebar__logo-sub">橘猫记账</span>
       </div>
     </div>
-    <nav class="sidebar__nav">
-      <a href="index.html" class="nav-item"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
-      <a href="index.html#chat" class="nav-item"><span class="nav-item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
-      <a href="calendar.html" class="nav-item"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
+        <nav class="sidebar__nav">
+      <a href="index.html"              class="nav-item"><span class="nav-item__icon">🏠</span> <span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="index.html#calc"         class="nav-item"><span class="nav-item__icon">🧮</span> <span data-i18n="nav.calc">Add</span></a>
+      <a href="calendar.html"           class="nav-item"><span class="nav-item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
       <a href="index.html#transactions" class="nav-item"><span class="nav-item__icon">📋</span> <span data-i18n="nav.transactions">Transactions</span></a>
-      <a href="budget.html" class="nav-item" data-nav="budget"><span class="nav-item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
-      <a href="reports.html" class="nav-item"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
-      <a href="settings.html" class="nav-item active"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+      <a href="budget.html"             class="nav-item"><span class="nav-item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+      <a href="reports.html"            class="nav-item"><span class="nav-item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+      <a href="settings.html"           class="nav-item active"><span class="nav-item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
     </nav>
     <div class="sidebar__bottom">
-      <div id="user-badge"></div>
       <button id="theme-toggle"><span id="theme-icon">🌙</span></button>
     </div>
   </aside>
@@ -184,23 +183,20 @@
 </div>
 
 <nav class="mobile-nav">
-  <div class="mobile-nav__items">
-    <a href="index.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
-    <a href="index.html#chat" class="mobile-nav__item"><span class="mobile-nav__item__icon">💬</span> <span data-i18n="nav.chat">Chat</span></a>
-    <a href="calendar.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">📅</span> <span data-i18n="nav.calendar">Calendar</span></a>
-    <a href="budget.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
-    <a href="reports.html" class="mobile-nav__item"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
-    <a href="settings.html" class="mobile-nav__item active"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
+    <div class="mobile-nav__items">
+    <a href="index.html"      class="mobile-nav__item"><span class="mobile-nav__item__icon">🏠</span> <span data-i18n="nav.home">Home</span></a>
+    <a href="index.html#calc" class="mobile-nav__item"><span class="mobile-nav__item__icon">🧮</span> <span data-i18n="nav.calc">Add</span></a>
+    <a href="budget.html"     class="mobile-nav__item"><span class="mobile-nav__item__icon">🎯</span> <span data-i18n="nav.budget">Budget</span></a>
+    <a href="reports.html"    class="mobile-nav__item"><span class="mobile-nav__item__icon">📊</span> <span data-i18n="nav.reports">Reports</span></a>
+    <a href="settings.html"   class="mobile-nav__item active"><span class="mobile-nav__item__icon">⚙️</span> <span data-i18n="nav.settings">Settings</span></a>
   </div>
 </nav>
 
 <script type="module">
 import { initApp, applyToDOM } from './js/app.js';
-import { requireAuth } from './js/auth.js';
 import { initSettings } from './js/settings.js';
 import { initRecurring } from './js/recurring.js';
 
-await requireAuth();
 await initApp();
 await initSettings();
 await initRecurring();
