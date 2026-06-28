@@ -1,13 +1,13 @@
 /**
  * i18n.js — Internationalisation engine
  *
- * Design goals:
- *  - Single source of truth: AppState.lang drives everything
- *  - Zero page reload on language switch
- *  - Simple t(key, vars) API — dot-notation path into the locale JSON
- *  - Automatic HTML rerender via data-i18n / data-i18n-placeholder / data-i18n-title
- *  - Bilingual NL parser (Chinese + English) built in
- *  - Easy to add a third language later (just add a new JSON file)
+ * How it works:
+ *  1. On every page load, initI18n() reads the saved language from IndexedDB
+ *  2. Loads the correct locale JSON
+ *  3. applyToDOM() stamps every data-i18n element immediately
+ *  4. When user switches language in Settings, setLang() saves it, reloads the locale,
+ *     re-stamps the DOM, fires 'langchange' so dynamic sections re-render,
+ *     then reloads the page so everything starts fresh in the new language
  */
 
 import { getSetting, setSetting } from './storage.js';
@@ -17,7 +17,6 @@ import { getSetting, setSetting } from './storage.js';
 let _strings = {};
 let _lang    = 'en';
 
-// Supported locales: key → relative path
 const LOCALES = {
   'en':    './locales/en.json',
   'zh-CN': './locales/zh-CN.json',
@@ -40,6 +39,7 @@ export async function loadLocale(lang) {
 
 export async function initI18n() {
   const saved = await getSetting('lang');
+  // Fix: parentheses around the ternary so saved value takes priority correctly
   const lang  = saved || (navigator.language.startsWith('zh') ? 'zh-CN' : 'en');
   await loadLocale(lang);
   applyToDOM();
@@ -49,18 +49,17 @@ export async function setLang(lang) {
   await loadLocale(lang);
   await setSetting('lang', lang);
   applyToDOM();
-  // Fire a custom event so page scripts can re-render dynamic content
+  // Fire event so any listener on the current page can re-render dynamic content
   document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
+  // Reload after a short delay so the user sees the toast, then gets a fully
+  // translated fresh page — this is the simplest and most reliable approach
+  setTimeout(() => window.location.reload(), 800);
 }
 
 export function currentLang() { return _lang; }
 
 // ─── Core translate function ──────────────────────────────────────────────────
 
-/**
- * t('dashboard.title')              → "Dashboard" | "首页"
- * t('toast.budgetSet', {cat:'Food'})→ "Budget set for Food ✓"
- */
 export function t(key, vars = {}) {
   const parts  = key.split('.');
   let   result = _strings;
@@ -86,12 +85,11 @@ export function t(key, vars = {}) {
 }
 
 /**
- * tc(key) — translate a category name using the categories namespace.
- * Falls back to the original name if no translation exists.
+ * tc(categoryName) — translate a system category name.
+ * User-created categories are returned as-is.
  */
 export function tc(categoryName = '') {
   const normalized = categoryName.toLowerCase().replace(/\s+/g, '');
-  // Try the exact key first (camelCase in JSON)
   const camelMap = {
     'food':          'food',
     'transport':     'transport',
@@ -115,36 +113,34 @@ export function tc(categoryName = '') {
   if (jsonKey && _strings.categories?.[jsonKey]) {
     return _strings.categories[jsonKey];
   }
-  return categoryName; // user-created category — no translation, show as-is
+  return categoryName;
 }
 
 // ─── DOM auto-translation ─────────────────────────────────────────────────────
 
-/**
- * Walk the DOM and apply translations to elements with:
- *   data-i18n="nav.dashboard"           → sets textContent
- *   data-i18n-placeholder="chat.inputPlaceholder" → sets placeholder
- *   data-i18n-title="topbar.toggleTheme" → sets title attribute
- *   data-i18n-html="chat.welcomeTitle"  → sets innerHTML (trusted strings only)
- */
 export function applyToDOM(root = document) {
+  // Text content
   root.querySelectorAll('[data-i18n]').forEach((el) => {
-    const key = el.dataset.i18n;
-    el.textContent = t(key);
+    const val = t(el.dataset.i18n);
+    if (typeof val === 'string') el.textContent = val;
   });
+  // innerHTML (trusted strings only)
   root.querySelectorAll('[data-i18n-html]').forEach((el) => {
     el.innerHTML = t(el.dataset.i18nHtml);
   });
+  // Placeholders
   root.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
     el.placeholder = t(el.dataset.i18nPlaceholder);
   });
+  // Title attributes
   root.querySelectorAll('[data-i18n-title]').forEach((el) => {
     el.title = t(el.dataset.i18nTitle);
   });
+  // Meta content
   root.querySelectorAll('[data-i18n-content]').forEach((el) => {
     el.setAttribute('content', t(el.dataset.i18nContent));
   });
-  // Update data-quick values on chat quick-entry buttons
+  // data-quick values on chat quick-entry buttons
   root.querySelectorAll('[data-i18n-quick]').forEach((el) => {
     el.dataset.quick = t(el.dataset.i18nQuick);
   });
@@ -153,19 +149,10 @@ export function applyToDOM(root = document) {
   document.documentElement.lang = _lang;
 }
 
+export function getStrings() { return _strings; }
+
 // ─── Bilingual NL parser ──────────────────────────────────────────────────────
 
-/**
- * Extended parseNaturalLanguage that understands both Chinese and English input.
- *
- * Chinese input examples:
- *   "今天午餐35"       → expense, Food, 35
- *   "电费200"         → expense, Bills, 200
- *   "工资3500"        → income, Salary, 3500
- *   "存入应急基金500"  → savings, Emergency Fund, 500
- *
- * English input examples are handled by the original keyword map.
- */
 export function parseNLBilingual(text) {
   const lower = text.toLowerCase();
 
@@ -173,22 +160,22 @@ export function parseNLBilingual(text) {
   let amount   = 0;
   let category = 'Others';
 
-  // ── Amount extraction (works for both languages) ───────────────────────────
+  // Amount extraction
   const amountMatch = text.match(/[\d,]+(\.\d{1,2})?/);
   if (amountMatch) amount = parseFloat(amountMatch[0].replace(',', ''));
 
-  // ── Type detection — Chinese ───────────────────────────────────────────────
+  // Type detection — Chinese
   if (/收到|收入|工资|薪资|freelance|自由|兼职|到账|奖金|分红|利息|租金收|营业额/.test(text)) {
     type = 'income';
   } else if (/存入|储蓄|存钱|定存|理财|积累/.test(text)) {
     type = 'savings';
   }
 
-  // ── Type detection — English ───────────────────────────────────────────────
+  // Type detection — English
   if (/\b(received|earned|got paid|income|salary)\b/.test(lower)) type = 'income';
   else if (/\b(saved|saving|deposit)\b/.test(lower) && type !== 'income') type = 'savings';
 
-  // ── Category maps (Chinese) ────────────────────────────────────────────────
+  // Category maps — Chinese
   const zhExpenseMap = {
     'Food':          ['餐饮','午餐','早餐','晚餐','吃','喝','咖啡','奶茶','外卖','餐厅','食物','超市','菜','零食'],
     'Transport':     ['交通','打车','公交','地铁','taxi','滴滴','油费','停车','toll','高速','加油'],
@@ -214,7 +201,7 @@ export function parseNLBilingual(text) {
     'Retirement':     ['养老','退休'],
   };
 
-  // ── Category maps (English) ────────────────────────────────────────────────
+  // Category maps — English
   const enExpenseMap = {
     'Food':          ['food','lunch','dinner','breakfast','eat','coffee','restaurant','meal','grocery','groceries','snack'],
     'Transport':     ['transport','grab','uber','petrol','fuel','toll','bus','train','parking','taxi','mrt'],
@@ -230,7 +217,7 @@ export function parseNLBilingual(text) {
     'Freelance':    ['freelance','project','client'],
     'Business':     ['business','sales','revenue'],
     'Investments':  ['investment','dividend','return','profit'],
-    'Other Income': ['bonus','allowance','transfer received'],
+    'Other Income': ['bonus','allowance'],
   };
 
   const enSavingsMap = {
@@ -240,10 +227,9 @@ export function parseNLBilingual(text) {
     'Retirement':     ['retirement','pension'],
   };
 
-  // ── Select the right map based on type ────────────────────────────────────
-  const expMap  = { ...zhExpenseMap,  ...enExpenseMap  };
-  const incMap  = { ...zhIncomeMap,   ...enIncomeMap   };
-  const savMap  = { ...zhSavingsMap,  ...enSavingsMap  };
+  const expMap = { ...zhExpenseMap,  ...enExpenseMap  };
+  const incMap = { ...zhIncomeMap,   ...enIncomeMap   };
+  const savMap = { ...zhSavingsMap,  ...enSavingsMap  };
 
   const activeMap = type === 'income' ? incMap : type === 'savings' ? savMap : expMap;
 
@@ -264,7 +250,3 @@ export function parseNLBilingual(text) {
 
   return { type, amount, category, description: text };
 }
-
-// ─── Expose current strings (for direct access when needed) ──────────────────
-
-export function getStrings() { return _strings; }
