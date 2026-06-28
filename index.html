@@ -47,7 +47,6 @@
       </a>
     </nav>
     <div class="sidebar__bottom">
-      <div id="user-badge"></div>
       <button id="theme-toggle" title="Toggle dark mode">
         <span id="theme-icon">🌙</span>
       </button>
@@ -311,7 +310,6 @@
 
 <script type="module">
 import { initApp, AppState, formatCurrency, formatDate, todayStr, getCurrentCycle, showToast, openModal, closeModal, t, tc, applyToDOM } from './js/app.js';
-import { requireAuth } from './js/auth.js';
 import { renderDashboard } from './js/dashboard.js';
 import { renderBudgetWidget } from './js/budget.js';
 import { initChat } from './js/chat.js';
@@ -321,7 +319,6 @@ import {
 } from './js/storage.js';
 
 // ── Bootstrap ──────────────────────────────────────────────
-await requireAuth();
 await initApp();
 
 // ── Hamburger menu (mobile) ───────────────────────────────
