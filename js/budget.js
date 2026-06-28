@@ -275,29 +275,36 @@ function categoryBudgetCard(s) {
 
 // ─── Budget form ──────────────────────────────────────────────────────────────
 
+let _formListenersAttached = false;
+
 function setupBudgetFormListeners() {
   const form = document.getElementById('budget-add-form');
   if (!form) return;
 
-  // Populate category selector — expense categories only
-  const catSelect = form.querySelector('#budget-cat-select');
-  if (catSelect) {
-    const expCats = _categories.filter((c) => c.type === 'expense');
-    catSelect.innerHTML = expCats.map((c) => `<option value="${c.name}">${catIcon(c.name)} ${c.name}</option>`).join('');
-  }
+  // Always repopulate the category dropdown (needed on language change)
+  populateCatSelect();
+
+  // Wire event listeners only once — prevent duplicate handlers on re-init
+  if (_formListenersAttached) return;
+  _formListenersAttached = true;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const catName = form.querySelector('#budget-cat-select').value;
-    const amount  = parseFloat(form.querySelector('#budget-amount-input').value);
+    const catSelect = document.getElementById('budget-cat-select');
+    const amtInput  = document.getElementById('budget-amount-input');
+    const catName   = catSelect?.value;
+    const amount    = parseFloat(amtInput?.value);
     if (!catName || !amount || amount <= 0) {
       showToast(t('toast.budgetRequired'), 'error');
       return;
     }
     await setCategoryBudget(catName, amount);
-    form.reset();
+    if (amtInput) amtInput.value = '';
+    // Close the add sheet
+    document.getElementById('budget-sheet')?.classList.remove('modal--open');
+    document.body.style.overflow = '';
     await refresh();
-    showToast(t('toast.budgetSet', { cat: catName }));
+    showToast(t('toast.budgetSet', { cat: tc(catName) }));
   });
 
   // Edit modal
@@ -315,6 +322,45 @@ function setupBudgetFormListeners() {
     closeModal('budget-edit-modal');
   });
 }
+
+function populateCatSelect() {
+  const catSelect = document.getElementById('budget-cat-select');
+  const catGrid   = document.getElementById('budget-cat-grid');
+  if (!catSelect || _categories.length === 0) return;
+
+  const expCats = _categories.filter((c) => c.type === 'expense');
+
+  // Hidden select keeps the form value
+  catSelect.innerHTML = expCats
+    .map((c) => `<option value="${c.name}">${tc(c.name)}</option>`)
+    .join('');
+
+  // Visual pill grid — tap to select
+  if (catGrid) {
+    const current = catSelect.value;
+    catGrid.innerHTML = expCats.map((c) => `
+      <button type="button" class="bcat-pill ${c.name === current ? 'bcat-pill--selected' : ''}"
+        data-cat="${escHtml(c.name)}">
+        <span class="bcat-pill__icon">${catIcon(c.name)}</span>
+        <span class="bcat-pill__name">${escHtml(tc(c.name))}</span>
+      </button>`).join('');
+
+    catGrid.querySelectorAll('.bcat-pill').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        catGrid.querySelectorAll('.bcat-pill').forEach((b) => b.classList.remove('bcat-pill--selected'));
+        btn.classList.add('bcat-pill--selected');
+        catSelect.value = btn.dataset.cat;
+      });
+    });
+
+    // Pre-select first if nothing selected
+    if (!catSelect.value && expCats.length > 0) {
+      catSelect.value = expCats[0].name;
+      catGrid.querySelector('.bcat-pill')?.classList.add('bcat-pill--selected');
+    }
+  }
+}
+
 
 function openEditModal(id) {
   const budget = _budgets.find((b) => b.id === id);
