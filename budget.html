@@ -156,7 +156,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script type="module">
-import { initApp, getCurrentCycle } from './js/app.js';
+import { initApp, getCurrentCycle, applyToDOM } from './js/app.js';
 import { initBudgetPage }           from './js/budget.js';
 
 await initApp();
@@ -166,6 +166,11 @@ const cycleEl = document.getElementById('budget-cycle-label');
 if (cycleEl) cycleEl.textContent = `📆 ${cycle.label}`;
 
 await initBudgetPage();
+
+document.addEventListener('langchange', async () => {
+  applyToDOM();
+  await initBudgetPage();
+});
 
 const countEl = document.getElementById('budget-count');
 if (countEl) {

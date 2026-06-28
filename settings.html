@@ -194,13 +194,19 @@
 </nav>
 
 <script type="module">
-import { initApp } from './js/app.js';
+import { initApp, applyToDOM } from './js/app.js';
 import { initSettings } from './js/settings.js';
 import { initRecurring } from './js/recurring.js';
 
 await initApp();
 await initSettings();
 await initRecurring();
+
+document.addEventListener('langchange', async () => {
+  applyToDOM();
+  await initSettings();
+  await initRecurring();
+});
 </script>
 </body>
 </html>
