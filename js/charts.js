@@ -4,7 +4,7 @@
  */
 
 import { getAllTransactions } from './storage.js';
-import { formatCurrency, getCurrentCycle, AppState } from './app.js';
+import { formatCurrency, getCurrentCycle, AppState, t } from './app.js';
 
 const chartInstances = {};
 
@@ -65,8 +65,8 @@ function renderSpendingChart(transactions, period) {
       datasets: [{
         label: 'Expenses',
         data,
-        borderColor: getCSSVar('--color-expense') || '#FF6B6B',
-        backgroundColor: 'rgba(255,107,107,0.1)',
+        borderColor: '#F97316',
+        backgroundColor: 'rgba(249,115,22,0.08)',
         tension: 0.4,
         fill: true,
         pointRadius: 4,
@@ -195,9 +195,9 @@ function renderIncomeVsExpense(transactions) {
     data: {
       labels,
       datasets: [
-        { label: 'Income', data: incomeData, backgroundColor: '#6BCB77' },
-        { label: 'Expenses', data: expenseData, backgroundColor: '#FF6B6B' },
-        { label: 'Savings', data: savingsData, backgroundColor: '#4D96FF' },
+        { label: t('transactionTypes.income'),  data: incomeData,  backgroundColor: '#16A34A' },
+        { label: t('transactionTypes.expense'), data: expenseData, backgroundColor: '#DC2626' },
+        { label: t('transactionTypes.savings'), data: savingsData, backgroundColor: '#2563EB' },
       ],
     },
     options: {

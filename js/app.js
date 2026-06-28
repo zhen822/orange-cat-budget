@@ -5,6 +5,7 @@
 
 import { initDB, seedCategories, getSetting, setSetting, getAllSettings } from './storage.js';
 import { initI18n, t, tc, setLang, currentLang, applyToDOM, parseNLBilingual } from './i18n.js';
+import { getCurrentUser } from './firebase.js';
 
 // Re-export i18n helpers so every module imports from one place
 export { t, tc, setLang, currentLang, applyToDOM };
@@ -67,12 +68,12 @@ export function applyTheme(theme) {
 }
 
 function setupThemeToggle() {
-  const btn = document.getElementById('theme-toggle');
-  if (!btn) return;
-  btn.addEventListener('click', async () => {
-    const next = AppState.theme === 'light' ? 'dark' : 'light';
-    applyTheme(next);
-    await setSetting('theme', next);
+  document.querySelectorAll('#theme-toggle').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const next = AppState.theme === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      await setSetting('theme', next);
+    });
   });
 }
 
