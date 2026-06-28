@@ -1,0 +1,58 @@
+/* darkmode.css — Dark mode supplemental overrides
+   Primary dark mode is handled via CSS custom properties in style.css.
+   This file handles any component-specific dark mode adjustments. */
+
+[data-theme="dark"] {
+  /* Chart.js overrides via CSS vars referenced in charts.js */
+  color-scheme: dark;
+}
+
+/* Logo dark-mode: swap image src via CSS content trick — handled via JS in app.js */
+[data-theme="dark"] .sidebar__logo-img {
+  box-shadow: 0 0 0 2px rgba(251,191,36,0.2);
+  content: url("../assets/icons/logo-icon-dark.svg");
+}
+
+[data-theme="dark"] .sidebar__logo-text {
+  color: #FBBF24;
+}
+
+[data-theme="dark"] .sidebar__logo-sub {
+  color: #6B7280;
+}
+
+[data-theme="dark"] .cal-cell--has-data {
+  background: rgba(91, 106, 240, 0.15);
+}
+
+[data-theme="dark"] .cal-cell--has-data:hover {
+  background: rgba(91, 106, 240, 0.2);
+}
+
+[data-theme="dark"] .chat-bubble--user .chat-bubble__body {
+  background: var(--color-primary);
+}
+
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+[data-theme="dark"] select option {
+  background: var(--color-surface);
+}
+
+[data-theme="dark"] .period-switcher .btn.active {
+  background: var(--color-surface-alt);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .badge--urgent { background: rgba(220,38,38,0.2); }
+[data-theme="dark"] .badge--soon   { background: rgba(217,119,6,0.2); }
+
+[data-theme="dark"] scrollbar-color {
+  scrollbar-color: var(--color-border) transparent;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar { width: 6px; height: 6px; }
+[data-theme="dark"] ::-webkit-scrollbar-track { background: transparent; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 3px; }

@@ -1,0 +1,71 @@
+/* dashboard.css — Dashboard page styles */
+
+/* ── Cycle label ──────────────────────────────────────────── */
+.cycle-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* ── Quick stats row ──────────────────────────────────────── */
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.quick-stat {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  text-align: center;
+}
+
+.quick-stat__label { font-size: 0.75rem; color: var(--color-text-muted); font-weight: 500; margin-bottom: 4px; }
+.quick-stat__value { font-size: 1.1rem; font-weight: 700; font-family: var(--font-mono); }
+
+/* ── Dashboard two-col layout ─────────────────────────────── */
+.dashboard-cols {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: var(--space-xl);
+}
+
+/* ── Recurring rows ───────────────────────────────────────── */
+.recurring-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.recurring-row:last-child { border-bottom: none; }
+
+.recurring-row__icon { font-size: 1.25rem; }
+
+.recurring-row__info { flex: 1; }
+.recurring-row__name { display: block; font-weight: 500; font-size: 0.875rem; }
+.recurring-row__date { font-size: 0.75rem; color: var(--color-text-muted); }
+
+.recurring-row__right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.recurring-row__amount { font-family: var(--font-mono); font-weight: 600; font-size: 0.875rem; }
+
+/* ── Savings goal items ───────────────────────────────────── */
+.goal-item { margin-bottom: var(--space-md); }
+.goal-item__header { display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: var(--space-xs); }
+.goal-item__pct { font-size: 0.75rem; color: var(--color-text-muted); text-align: right; margin-top: 4px; }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .dashboard-cols { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .quick-stats { grid-template-columns: 1fr; }
+}

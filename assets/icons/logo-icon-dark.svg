@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img">
+<title>OrangeCat Budget — dark mode</title>
+<desc>Orange tabby kitten face mascot for dark backgrounds</desc>
+<defs>
+  <radialGradient id="hGd" cx="50%" cy="42%" r="52%">
+    <stop offset="0%" stop-color="#FBBF24"/>
+    <stop offset="100%" stop-color="#F59E0B"/>
+  </radialGradient>
+  <radialGradient id="mGd" cx="50%" cy="40%" r="55%">
+    <stop offset="0%" stop-color="#FFF8E8"/>
+    <stop offset="100%" stop-color="#FFF4D6"/>
+  </radialGradient>
+  <radialGradient id="iLd" cx="35%" cy="30%" r="60%">
+    <stop offset="0%" stop-color="#8C6C3A"/>
+    <stop offset="60%" stop-color="#5A4525"/>
+    <stop offset="100%" stop-color="#2C1F0A"/>
+  </radialGradient>
+  <radialGradient id="cGd" cx="38%" cy="32%" r="65%">
+    <stop offset="0%" stop-color="#34D399"/>
+    <stop offset="100%" stop-color="#059669"/>
+  </radialGradient>
+</defs>
+
+<!-- Dark icon background — warm charcoal -->
+<rect x="0" y="0" width="400" height="400" rx="88" fill="#1C1208"/>
+<rect x="3" y="3" width="394" height="394" rx="85" fill="none" stroke="#92400E" stroke-width="2" opacity="0.6"/>
+
+<!-- Neck / collar -->
+<ellipse cx="200" cy="368" rx="78" ry="34" fill="#F59E0B"/>
+<rect x="96" y="348" width="208" height="20" rx="10" fill="#5A3D2B"/>
+<rect x="98" y="350" width="204" height="16" rx="8" fill="#3D2A1A"/>
+<line x1="110" y1="358" x2="290" y2="358" stroke="#6B4C34" stroke-width="1" stroke-dasharray="5 5" opacity="0.7"/>
+<ellipse cx="200" cy="349" rx="5" ry="4" fill="none" stroke="#6B4C34" stroke-width="2.5"/>
+<circle cx="200" cy="372" r="20" fill="url(#cGd)"/>
+<circle cx="200" cy="372" r="16.5" fill="#059669"/>
+<circle cx="200" cy="372" r="20" fill="none" stroke="#34D399" stroke-width="1.5"/>
+<text x="200" y="378" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Arial,sans-serif" font-size="15" font-weight="800" fill="#ECFDF5">¥</text>
+
+<!-- Left ear -->
+<ellipse cx="108" cy="138" rx="50" ry="58" fill="#F59E0B"/>
+<path d="M76 108 Q108 62 140 108" fill="#D97706"/>
+<ellipse cx="108" cy="150" rx="31" ry="37" fill="#FBBF24"/>
+<ellipse cx="108" cy="157" rx="19" ry="23" fill="#FFB7C5" opacity="0.85"/>
+
+<!-- Right ear -->
+<ellipse cx="292" cy="138" rx="50" ry="58" fill="#F59E0B"/>
+<path d="M260 108 Q292 62 324 108" fill="#D97706"/>
+<ellipse cx="292" cy="150" rx="31" ry="37" fill="#FBBF24"/>
+<ellipse cx="292" cy="157" rx="19" ry="23" fill="#FFB7C5" opacity="0.85"/>
+
+<!-- Head -->
+<ellipse cx="200" cy="234" rx="158" ry="152" fill="url(#hGd)"/>
+
+<!-- Forehead stripes -->
+<path d="M200 108 Q203 128 200 152" fill="none" stroke="#D97706" stroke-width="7.5" stroke-linecap="round" opacity="0.48"/>
+<path d="M170 116 Q174 134 172 156" fill="none" stroke="#D97706" stroke-width="6" stroke-linecap="round" opacity="0.4"/>
+<path d="M230 116 Q226 134 228 156" fill="none" stroke="#D97706" stroke-width="6" stroke-linecap="round" opacity="0.4"/>
+
+<!-- Chubby cheeks -->
+<ellipse cx="90" cy="262" rx="58" ry="46" fill="#FBBF24" opacity="0.32"/>
+<ellipse cx="310" cy="262" rx="58" ry="46" fill="#FBBF24" opacity="0.32"/>
+<ellipse cx="92" cy="270" rx="42" ry="27" fill="#FFB7C5" opacity="0.48"/>
+<ellipse cx="308" cy="270" rx="42" ry="27" fill="#FFB7C5" opacity="0.48"/>
+
+<!-- Muzzle -->
+<ellipse cx="200" cy="288" rx="80" ry="60" fill="url(#mGd)"/>
+
+<!-- Left eye -->
+<ellipse cx="152" cy="222" rx="44" ry="42" fill="white"/>
+<ellipse cx="152" cy="225" rx="32" ry="33" fill="url(#iLd)"/>
+<ellipse cx="152" cy="228" rx="16" ry="22" fill="#1A0F00"/>
+<ellipse cx="140" cy="212" rx="11" ry="8.5" fill="white" opacity="0.92"/>
+<ellipse cx="164" cy="234" rx="5.5" ry="4.5" fill="white" opacity="0.72"/>
+<circle cx="168" cy="215" r="3" fill="white" opacity="0.6"/>
+<path d="M114 212 Q152 193 190 212" fill="none" stroke="#5A3D2B" stroke-width="3.5" stroke-linecap="round"/>
+
+<!-- Right eye -->
+<ellipse cx="248" cy="222" rx="44" ry="42" fill="white"/>
+<ellipse cx="248" cy="225" rx="32" ry="33" fill="url(#iLd)"/>
+<ellipse cx="248" cy="228" rx="16" ry="22" fill="#1A0F00"/>
+<ellipse cx="236" cy="212" rx="11" ry="8.5" fill="white" opacity="0.92"/>
+<ellipse cx="260" cy="234" rx="5.5" ry="4.5" fill="white" opacity="0.72"/>
+<circle cx="264" cy="215" r="3" fill="white" opacity="0.6"/>
+<path d="M210 212 Q248 193 286 212" fill="none" stroke="#5A3D2B" stroke-width="3.5" stroke-linecap="round"/>
+
+<!-- Nose -->
+<path d="M189 281 L200 294 L211 281 Q200 276 189 281Z" fill="#F9A8C9"/>
+<line x1="200" y1="294" x2="200" y2="302" stroke="#E879A0" stroke-width="1.8" stroke-linecap="round"/>
+
+<!-- Mouth -->
+<path d="M185 305 Q192 315 200 310 Q208 315 215 305" fill="none" stroke="#D97706" stroke-width="2.4" stroke-linecap="round"/>
+
+<!-- Whiskers — lighter for dark bg -->
+<line x1="52" y1="280" x2="166" y2="286" stroke="#FDE68A" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+<line x1="48" y1="294" x2="162" y2="293" stroke="#FDE68A" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+<line x1="55" y1="308" x2="163" y2="300" stroke="#FDE68A" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+<line x1="348" y1="280" x2="234" y2="286" stroke="#FDE68A" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+<line x1="352" y1="294" x2="238" y2="293" stroke="#FDE68A" stroke-width="1.6" stroke-linecap="round" opacity="0.45"/>
+<line x1="345" y1="308" x2="237" y2="300" stroke="#FDE68A" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+</svg>

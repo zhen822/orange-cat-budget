@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" role="img">
+<title>OrangeCat Budget — 橘猫记账</title>
+<desc>Cute orange tabby kitten face with sparkly eyes, blush cheeks, three forehead stripes, and an emerald coin collar tag</desc>
+<defs>
+  <radialGradient id="hG" cx="50%" cy="42%" r="52%">
+    <stop offset="0%" stop-color="#FBBF24"/>
+    <stop offset="100%" stop-color="#F59E0B"/>
+  </radialGradient>
+  <radialGradient id="mG" cx="50%" cy="40%" r="55%">
+    <stop offset="0%" stop-color="#FFF8E8"/>
+    <stop offset="100%" stop-color="#FFF4D6"/>
+  </radialGradient>
+  <radialGradient id="iL" cx="35%" cy="30%" r="60%">
+    <stop offset="0%" stop-color="#7C5C2A"/>
+    <stop offset="60%" stop-color="#4A3518"/>
+    <stop offset="100%" stop-color="#2C1F0A"/>
+  </radialGradient>
+  <radialGradient id="iR" cx="35%" cy="30%" r="60%">
+    <stop offset="0%" stop-color="#7C5C2A"/>
+    <stop offset="60%" stop-color="#4A3518"/>
+    <stop offset="100%" stop-color="#2C1F0A"/>
+  </radialGradient>
+  <radialGradient id="cG" cx="38%" cy="32%" r="65%">
+    <stop offset="0%" stop-color="#34D399"/>
+    <stop offset="100%" stop-color="#059669"/>
+  </radialGradient>
+</defs>
+
+<!-- Icon background -->
+<rect x="0" y="0" width="400" height="400" rx="88" fill="#FEF3C7"/>
+<rect x="3" y="3" width="394" height="394" rx="85" fill="none" stroke="#FDE68A" stroke-width="2.5"/>
+
+<!-- Neck / collar base -->
+<ellipse cx="200" cy="368" rx="78" ry="34" fill="#F59E0B"/>
+
+<!-- Collar band -->
+<rect x="96" y="348" width="208" height="20" rx="10" fill="#5A3D2B"/>
+<rect x="98" y="350" width="204" height="16" rx="8" fill="#6B4C34"/>
+<line x1="110" y1="358" x2="290" y2="358" stroke="#8B6347" stroke-width="1" stroke-dasharray="5 5" opacity="0.6"/>
+
+<!-- Coin tag ring -->
+<ellipse cx="200" cy="349" rx="5" ry="4" fill="none" stroke="#5A3D2B" stroke-width="2.5"/>
+
+<!-- Coin tag -->
+<circle cx="200" cy="372" r="20" fill="url(#cG)"/>
+<circle cx="200" cy="372" r="16.5" fill="#059669"/>
+<circle cx="200" cy="372" r="20" fill="none" stroke="#34D399" stroke-width="1.5"/>
+<text x="200" y="378" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,Arial,sans-serif" font-size="15" font-weight="800" fill="#ECFDF5">¥</text>
+
+<!-- LEFT EAR -->
+<ellipse cx="108" cy="138" rx="50" ry="58" fill="#F59E0B"/>
+<path d="M76 108 Q108 62 140 108" fill="#E08A00"/>
+<ellipse cx="108" cy="150" rx="31" ry="37" fill="#FBBF24"/>
+<ellipse cx="108" cy="157" rx="19" ry="23" fill="#FFB7C5" opacity="0.88"/>
+
+<!-- RIGHT EAR -->
+<ellipse cx="292" cy="138" rx="50" ry="58" fill="#F59E0B"/>
+<path d="M260 108 Q292 62 324 108" fill="#E08A00"/>
+<ellipse cx="292" cy="150" rx="31" ry="37" fill="#FBBF24"/>
+<ellipse cx="292" cy="157" rx="19" ry="23" fill="#FFB7C5" opacity="0.88"/>
+
+<!-- HEAD -->
+<ellipse cx="200" cy="234" rx="158" ry="152" fill="url(#hG)"/>
+
+<!-- Head sheen -->
+<ellipse cx="158" cy="152" rx="52" ry="36" fill="#FBBF24" opacity="0.25"/>
+
+<!-- Forehead tabby stripes -->
+<path d="M200 108 Q203 128 200 152" fill="none" stroke="#D97706" stroke-width="7.5" stroke-linecap="round" opacity="0.5"/>
+<path d="M170 116 Q174 134 172 156" fill="none" stroke="#D97706" stroke-width="6" stroke-linecap="round" opacity="0.42"/>
+<path d="M230 116 Q226 134 228 156" fill="none" stroke="#D97706" stroke-width="6" stroke-linecap="round" opacity="0.42"/>
+
+<!-- Side face stripes — subtle -->
+<path d="M52 212 Q62 222 55 234" fill="none" stroke="#D97706" stroke-width="4" stroke-linecap="round" opacity="0.28"/>
+<path d="M348 212 Q338 222 345 234" fill="none" stroke="#D97706" stroke-width="4" stroke-linecap="round" opacity="0.28"/>
+
+<!-- Chubby cheek puffs -->
+<ellipse cx="90" cy="262" rx="58" ry="46" fill="#FBBF24" opacity="0.38"/>
+<ellipse cx="310" cy="262" rx="58" ry="46" fill="#FBBF24" opacity="0.38"/>
+
+<!-- Blush -->
+<ellipse cx="92" cy="270" rx="42" ry="27" fill="#FFB7C5" opacity="0.52"/>
+<ellipse cx="308" cy="270" rx="42" ry="27" fill="#FFB7C5" opacity="0.52"/>
+
+<!-- Cream muzzle -->
+<ellipse cx="200" cy="288" rx="80" ry="60" fill="url(#mG)"/>
+
+<!-- LEFT EYE -->
+<ellipse cx="152" cy="222" rx="44" ry="42" fill="white"/>
+<ellipse cx="152" cy="225" rx="32" ry="33" fill="url(#iL)"/>
+<ellipse cx="152" cy="228" rx="16" ry="22" fill="#1A0F00"/>
+<ellipse cx="140" cy="212" rx="11" ry="8.5" fill="white" opacity="0.92"/>
+<ellipse cx="164" cy="234" rx="5.5" ry="4.5" fill="white" opacity="0.72"/>
+<circle cx="168" cy="215" r="3" fill="white" opacity="0.6"/>
+<path d="M114 212 Q152 193 190 212" fill="none" stroke="#5A3D2B" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M118 238 Q152 252 186 238" fill="none" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" opacity="0.38"/>
+
+<!-- RIGHT EYE -->
+<ellipse cx="248" cy="222" rx="44" ry="42" fill="white"/>
+<ellipse cx="248" cy="225" rx="32" ry="33" fill="url(#iR)"/>
+<ellipse cx="248" cy="228" rx="16" ry="22" fill="#1A0F00"/>
+<ellipse cx="236" cy="212" rx="11" ry="8.5" fill="white" opacity="0.92"/>
+<ellipse cx="260" cy="234" rx="5.5" ry="4.5" fill="white" opacity="0.72"/>
+<circle cx="264" cy="215" r="3" fill="white" opacity="0.6"/>
+<path d="M210 212 Q248 193 286 212" fill="none" stroke="#5A3D2B" stroke-width="3.5" stroke-linecap="round"/>
+<path d="M214 238 Q248 252 282 238" fill="none" stroke="#D97706" stroke-width="1.5" stroke-linecap="round" opacity="0.38"/>
+
+<!-- NOSE — pink triangle -->
+<path d="M189 281 L200 294 L211 281 Q200 276 189 281Z" fill="#F9A8C9"/>
+<path d="M189 281 L200 294 L211 281" fill="none" stroke="#E879A0" stroke-width="1.2" stroke-linejoin="round"/>
+<line x1="200" y1="294" x2="200" y2="302" stroke="#E879A0" stroke-width="1.8" stroke-linecap="round"/>
+
+<!-- MOUTH -->
+<path d="M185 305 Q192 315 200 310 Q208 315 215 305" fill="none" stroke="#D97706" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+<!-- WHISKERS LEFT -->
+<line x1="52" y1="280" x2="166" y2="286" stroke="#5A3D2B" stroke-width="1.6" stroke-linecap="round" opacity="0.48"/>
+<line x1="48" y1="294" x2="162" y2="293" stroke="#5A3D2B" stroke-width="1.6" stroke-linecap="round" opacity="0.48"/>
+<line x1="55" y1="308" x2="163" y2="300" stroke="#5A3D2B" stroke-width="1.5" stroke-linecap="round" opacity="0.38"/>
+
+<!-- WHISKERS RIGHT -->
+<line x1="348" y1="280" x2="234" y2="286" stroke="#5A3D2B" stroke-width="1.6" stroke-linecap="round" opacity="0.48"/>
+<line x1="352" y1="294" x2="238" y2="293" stroke="#5A3D2B" stroke-width="1.6" stroke-linecap="round" opacity="0.48"/>
+<line x1="345" y1="308" x2="237" y2="300" stroke="#5A3D2B" stroke-width="1.5" stroke-linecap="round" opacity="0.38"/>
+</svg>

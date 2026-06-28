@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img">
+<title>OrangeCat Budget favicon</title>
+<defs>
+  <radialGradient id="fhG" cx="50%" cy="42%" r="55%">
+    <stop offset="0%" stop-color="#FBBF24"/>
+    <stop offset="100%" stop-color="#F59E0B"/>
+  </radialGradient>
+</defs>
+<rect x="0" y="0" width="32" height="32" rx="7" fill="#FEF3C7"/>
+<!-- Left ear -->
+<ellipse cx="9.5" cy="10.5" rx="4.2" ry="4.8" fill="#F59E0B"/>
+<ellipse cx="9.5" cy="11.2" rx="2.6" ry="3.1" fill="#FBBF24"/>
+<ellipse cx="9.5" cy="11.6" rx="1.6" ry="1.9" fill="#FFB7C5" opacity="0.85"/>
+<!-- Right ear -->
+<ellipse cx="22.5" cy="10.5" rx="4.2" ry="4.8" fill="#F59E0B"/>
+<ellipse cx="22.5" cy="11.2" rx="2.6" ry="3.1" fill="#FBBF24"/>
+<ellipse cx="22.5" cy="11.6" rx="1.6" ry="1.9" fill="#FFB7C5" opacity="0.85"/>
+<!-- Head -->
+<ellipse cx="16" cy="18.5" rx="12.8" ry="12.2" fill="url(#fhG)"/>
+<!-- Forehead stripes -->
+<path d="M16 9 Q16.2 10.5 16 12.2" fill="none" stroke="#D97706" stroke-width="0.9" stroke-linecap="round" opacity="0.5"/>
+<path d="M13.6 9.5 Q13.8 10.8 13.7 12.3" fill="none" stroke="#D97706" stroke-width="0.7" stroke-linecap="round" opacity="0.42"/>
+<path d="M18.4 9.5 Q18.2 10.8 18.3 12.3" fill="none" stroke="#D97706" stroke-width="0.7" stroke-linecap="round" opacity="0.42"/>
+<!-- Blush -->
+<ellipse cx="8.5" cy="20.5" rx="3.2" ry="2" fill="#FFB7C5" opacity="0.55"/>
+<ellipse cx="23.5" cy="20.5" rx="3.2" ry="2" fill="#FFB7C5" opacity="0.55"/>
+<!-- Muzzle -->
+<ellipse cx="16" cy="21.8" rx="6.2" ry="4.6" fill="#FFF4D6"/>
+<!-- Left eye -->
+<ellipse cx="12.2" cy="17" rx="3.4" ry="3.3" fill="white"/>
+<ellipse cx="12.2" cy="17.3" rx="2.5" ry="2.6" fill="#4A3518"/>
+<ellipse cx="12.2" cy="17.5" rx="1.2" ry="1.7" fill="#1A0F00"/>
+<ellipse cx="11.3" cy="16.2" rx="0.9" ry="0.7" fill="white" opacity="0.9"/>
+<path d="M9.2 16.2 Q12.2 14.8 15.2 16.2" fill="none" stroke="#5A3D2B" stroke-width="0.9" stroke-linecap="round"/>
+<!-- Right eye -->
+<ellipse cx="19.8" cy="17" rx="3.4" ry="3.3" fill="white"/>
+<ellipse cx="19.8" cy="17.3" rx="2.5" ry="2.6" fill="#4A3518"/>
+<ellipse cx="19.8" cy="17.5" rx="1.2" ry="1.7" fill="#1A0F00"/>
+<ellipse cx="18.9" cy="16.2" rx="0.9" ry="0.7" fill="white" opacity="0.9"/>
+<path d="M16.8 16.2 Q19.8 14.8 22.8 16.2" fill="none" stroke="#5A3D2B" stroke-width="0.9" stroke-linecap="round"/>
+<!-- Nose -->
+<path d="M15.1 21.2 L16 22.2 L16.9 21.2 Q16 20.8 15.1 21.2Z" fill="#F9A8C9"/>
+<!-- Mouth -->
+<path d="M14.5 22.7 Q16 23.6 17.5 22.7" fill="none" stroke="#D97706" stroke-width="0.7" stroke-linecap="round"/>
+<!-- Collar -->
+<rect x="9" y="28.5" width="14" height="2" rx="1" fill="#5A3D2B"/>
+<!-- Coin tag -->
+<circle cx="16" cy="31" r="2.5" fill="#059669"/>
+</svg>
