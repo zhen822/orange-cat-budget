@@ -279,3 +279,172 @@
   .bsum-grid { grid-template-columns: 1fr; }
   .bsum-cell { border-right: none; }
 }
+
+/* ── Budget bottom sheet ─────────────────────────────────── */
+.budget-sheet__box {
+  max-width: 520px;
+  width: 100%;
+}
+
+.budget-sheet__field {
+  margin-bottom: var(--space-lg);
+}
+
+.budget-sheet__label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.budget-sheet__submit {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  border-radius: var(--radius-md);
+  margin-top: var(--space-sm);
+}
+
+/* ── Category pill grid ──────────────────────────────────── */
+.budget-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xs);
+}
+
+.bcat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-alt);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: inherit;
+}
+
+.bcat-pill:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+}
+
+.bcat-pill--selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.bcat-pill__icon { font-size: 1.4rem; line-height: 1; }
+.bcat-pill__name { font-size: 0.68rem; font-weight: 600; color: var(--color-text-secondary); text-align: center; line-height: 1.2; }
+
+.bcat-pill--selected .bcat-pill__name { color: var(--color-primary); }
+
+/* ── Amount input row ────────────────────────────────────── */
+.budget-amount-row {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  background: var(--color-surface);
+}
+
+.budget-amount-row:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(91,106,240,0.15);
+}
+
+.budget-amount-sym {
+  padding: 14px 16px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-alt);
+  border-right: 1.5px solid var(--color-border);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.budget-amount-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  font-size: 1.2rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  background: transparent;
+  color: var(--color-text);
+  width: 100%;
+}
+
+.budget-amount-input::placeholder {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* ── Mobile sheet style (slides up from bottom) ──────────── */
+@media (max-width: 640px) {
+  .modal {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .budget-sheet__box {
+    max-width: 100%;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom));
+    animation: sheet-up 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+    max-height: 92dvh;
+    overflow-y: auto;
+  }
+
+  @keyframes sheet-up {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  .budget-cat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Budget cards — tighter on mobile */
+  .bcat-card { padding: var(--space-md); }
+
+  .bcat-amounts {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs);
+  }
+
+  .bcat-actions {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .bcat-actions .btn--sm {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.75rem;
+    padding: 6px 8px;
+  }
+
+  /* Summary grid 2 col on mobile */
+  .bsum-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .bsum-cell:nth-child(2) { border-right: none; }
+  .bsum-cell:nth-child(4) { border-right: none; }
+  .bsum-cell:nth-child(5) { border-bottom: none; }
+  .bsum-cell:nth-child(6) { border-bottom: none; }
+
+  /* Charts stack on mobile */
+  .charts-grid { grid-template-columns: 1fr; }
+}
